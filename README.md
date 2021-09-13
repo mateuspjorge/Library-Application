@@ -1,4 +1,4 @@
-**COMO TRABALHAR NESTE REPOSITORIO**
+## COMO TRABALHAR NESTE REPOSITORIO
 
 Este documento consiste em como se deve trabalhar no repositório sem a geração de conflitos ou sobreposição de código
 
@@ -20,7 +20,7 @@ Nesta seção iniciaremos o processo de clone do repositório, que consiste em c
 
 Recomendamos a utilização de cliente GIT como o [Git Bash](https://git-scm.com/downloads), ou outro de sua preferência. 
 
-Entre no repositório bitbucket do projeto e siga os passos abaixo para clonar o repositório:
+Entre no repositório Github do projeto e siga os passos abaixo para clonar o repositório:
 
 1. Em **Code** você verá o ícone de uma **prancheta**. Clique neste botão.
 2. Copie o código que será mostrado no modal.
