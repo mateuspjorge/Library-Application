@@ -22,7 +22,7 @@ Recomendamos a utilização de cliente GIT como o [Git Bash](https://git-scm.com
 
 Entre no repositório bitbucket do projeto e siga os passos abaixo para clonar o repositório:
 
-1. Em **Source** você verá o botão **clone**. Clique neste botão.
+1. Em **Code** você verá o ícone de uma **prancheta**. Clique neste botão.
 2. Copie o código que será mostrado no modal.
 3. Abra o Git Bash ou outro cliente git navega até uma pasta onde você colocará o código (recomendamos uma pasta diferente da pasta do workspace do sts)
 4. Execute o comando.
