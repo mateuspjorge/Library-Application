@@ -1,0 +1,12 @@
+server:
+  port: 8080
+
+spring:
+  cloud:
+    config:
+      server:
+        git:
+          uri: 'https://github.com/mateuspjorge/Library-Application-Config'
+          username: mateuspjorge
+          password: M@teuss71
+          default-label: master
