@@ -4,20 +4,30 @@ import java.io.Serializable;
 
 import br.com.modelServer.enums.GenderEnum;
 
-public abstract class Person<ID extends Serializable> implements Serializable {
+public interface Person extends Serializable {
 
-	private static final long serialVersionUID = -2652636666826647702L;
+	Long getId();
 
-	private Long id;
+	void setId(Long id);
 
-	private Long address;
+	Long getAddress();
 
-	private Long contact;
+	void setAddress(Long address);
 
-	private Integer age;
+	Long getContact();
 
-	private String name;
+	void setContact(Long contact);
 
-	private GenderEnum gender;
+	Integer getAge();
+
+	void setAge(Integer age);
+
+	String getName();
+
+	void setName(String name);
+
+	GenderEnum getGender();
+
+	void setGender(GenderEnum gender);
 
 }
