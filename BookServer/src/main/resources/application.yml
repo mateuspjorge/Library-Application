@@ -1,0 +1,30 @@
+server:
+  port: 8081
+
+spring:
+  datasource:
+    tomcat:
+      max-active: 3
+    driver-class-name: org.postgresql.Driver
+    url: 'jdbc:postgresql://localhost:5432/DB_BOOK'
+    username: postgres
+    password: 96539967
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+eureka:
+  instance:
+    preferIpAddress: true
+    hostname: localhost
+    port: 8761
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: 'http://${eureka.instance.hostname}:${eureka.instance.port}/eureka/'
