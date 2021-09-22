@@ -1,4 +1,4 @@
-package br.com.modelServer.entitys;
+package br.com.bookServer.entitys;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,7 +30,7 @@ public class Book {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_BOOK")
-	@Column(name = "ID_BOOK")
+	@Column(name = "ID_BOOK", nullable = false)
 	private Long id;
 
 	@Column(name = "DS_TITLE", nullable = false)

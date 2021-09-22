@@ -1,8 +1,8 @@
-package br.com.modelServer;
+package br.com.userServer.interfaces;
 
 import java.io.Serializable;
 
-import br.com.modelServer.enums.GenderEnum;
+import br.com.userServer.enums.GenderEnum;
 
 public interface Person extends Serializable {
 

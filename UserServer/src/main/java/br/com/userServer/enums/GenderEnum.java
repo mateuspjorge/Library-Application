@@ -1,4 +1,4 @@
-package br.com.modelServer.enums;
+package br.com.userServer.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,19 +7,16 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public enum ContactTypeEnum {
+public enum GenderEnum {
 
-	EMAIL(1L, "E-mail"),
-	HOME_PHONE(2L, "Home Phone"),
-	CELL_PHONE(3L, "Cell phone"),
-	COMERCIAL_PHONE(4L, "Commercial phone");
+	MALE(1L, "Male"), FEMALE(2L, "Female");
 
 	private Long code;
 
 	private String description;
 
-	public static ContactTypeEnum getContactTypeEnum(Long cod) {
-		for (ContactTypeEnum value : ContactTypeEnum.values()) {
+	public static GenderEnum getGenderEnum(Long cod) {
+		for (GenderEnum value : GenderEnum.values()) {
 			if (value.getCode().equals(cod))
 				return value;
 		}

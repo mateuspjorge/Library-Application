@@ -9,12 +9,12 @@
 		<version>2.5.4</version>
 		<relativePath />
 	</parent>
-	<groupId>br.com.bookServer</groupId>
-	<artifactId>BookServer</artifactId>
+	<groupId>br.com.loanServer</groupId>
+	<artifactId>LoanServer</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>BookServer</name>
+	<name>LoanServer</name>
 	<description>
-		Service responsible for managing book information.
+		Service responsible for managing loan information.
 	</description>
 	<properties>
 		<java.version>1.8</java.version>
