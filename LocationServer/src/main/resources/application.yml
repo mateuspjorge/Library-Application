@@ -1,14 +1,14 @@
 server:
-  port: 8081
+  port: 8084
 
 spring:
   application:
-    name: book-server
+    name: location-server
   datasource:
     tomcat:
       max-active: 3
     driver-class-name: org.postgresql.Driver
-    url: 'jdbc:postgresql://localhost:5432/DB_BOOK'
+    url: 'jdbc:postgresql://localhost:5432/DB_LOCATION'
     username: postgres
     password: 96539967
   jpa:
