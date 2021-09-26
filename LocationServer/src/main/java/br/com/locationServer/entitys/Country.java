@@ -1,5 +1,7 @@
 package br.com.locationServer.entitys;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -26,14 +28,16 @@ import lombok.Data;
                 @Parameter(name = "increment_size", value = "1")
         }
 )
-public class Country {
+public class Country implements Serializable {
+
+	private static final long serialVersionUID = -5049507472994103076L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_COUNTRY")
 	@Column(name = "ID_COUNTRY", nullable = false)
 	private Long id;
 
-	@Column(name = "NM_NAME", nullable = false)
+	@Column(name = "NM_NAME", nullable = false, length = 30)
 	private String name;
 
 }
