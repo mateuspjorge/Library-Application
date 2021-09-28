@@ -26,7 +26,7 @@ public class CountryService {
 
 	public Country countryRegister(String name) throws CountryException {
 		if (StringUtils.isEmpty(name)) {
-			throw new CountryException("O nome digitado é inválido");
+			throw new CountryException("O nome digitado é inválido.");
 		}
 		return countryRepository.save(Country.builder().name(name).build());
 	}

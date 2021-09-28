@@ -32,7 +32,7 @@ public class StateService {
 			throw new StateException("O nome informado é inválido.");
 		}
 		if (StringUtils.isEmpty(stateDTO.getInitials())) {
-			throw new StateException("As iniciais digitadas são inválidas");
+			throw new StateException("As iniciais digitadas são inválidas.");
 		}
 		return stateRepository.save(State.builder()
 										 .countryId(stateDTO.getCountryId())
