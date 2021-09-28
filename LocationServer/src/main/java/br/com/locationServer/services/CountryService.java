@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 
 import br.com.locationServer.dtos.CountryDTO;
@@ -30,11 +31,15 @@ public class CountryService {
 		return countryRepository.save(Country.builder().name(name).build());
 	}
 
-	public List<Country> searchAllCountries() {
-		return countryRepository.findAll();
+	public List<Country> searchAllCountries() throws CountryException {
+		List<Country> countriesFound = countryRepository.findAll();
+		if (CollectionUtils.isEmpty(countriesFound)) {
+			throw new CountryException("Nenhum registro foi encontrado.");
+		}
+		return countriesFound;
 	}
 
-	public Country searchByName(String name) throws CountryException {
+	public Country searchCountryByName(String name) throws CountryException {
 		if (StringUtils.isEmpty(name)) {
 			throw new CountryException("O nome digitado é inválido.");
 		}
@@ -42,7 +47,7 @@ public class CountryService {
 	}
 
 	public Country updateCountry(CountryDTO countryDTO) throws CountryException {
-		Country countryFound = searchByName(countryDTO.getName());
+		Country countryFound = searchCountryByName(countryDTO.getName());
 		if (ObjectUtils.isEmpty(countryFound)) {
 			throw new CountryException("Nenhum registro foi encontrado.");
 		}
@@ -50,13 +55,12 @@ public class CountryService {
 		return countryRepository.save(countryFound);
 	}
 
-	public Boolean deleteCountry(Long idCountry) throws CountryException {
-		Country country = countryRepository.findById(idCountry).orElse(null);
-		if (ObjectUtils.isEmpty(country)) {
+	public void deleteCountry(String name) throws CountryException {
+		Country countryFound = searchCountryByName(name);
+		if (ObjectUtils.isEmpty(countryFound)) {
 			throw new CountryException("Nenhum registro foi encontrado.");
 		}
-		countryRepository.delete(country);
-		return Boolean.TRUE;
+		countryRepository.delete(countryFound);
 	}
 
 }

@@ -43,7 +43,7 @@ public class CountryController {
 
 	@GetMapping("/search")
 	@ResponseBody
-	public ResponseEntity<List<CountryDTO>> searchAllCountries() {
+	public ResponseEntity<List<CountryDTO>> searchAllCountries() throws CountryException {
 		List<Country> countriesFound = countryService.searchAllCountries();
 		List<CountryDTO> countryDTOs = new ArrayList<>();
 		if (!CollectionUtils.isEmpty(countriesFound)) {
@@ -61,8 +61,8 @@ public class CountryController {
 
 	@DeleteMapping("/delete")
 	@ResponseBody
-	public ResponseEntity<Boolean> deleteCountry(@RequestBody CountryDTO countryDTO) throws CountryException {
-		return new ResponseEntity<Boolean>(countryService.deleteCountry(countryDTO.getId()), HttpStatus.ACCEPTED);
+	public void deleteCountry(@RequestBody CountryDTO countryDTO) throws CountryException {
+		countryService.deleteCountry(countryDTO.getName());
 	}
 
 }
