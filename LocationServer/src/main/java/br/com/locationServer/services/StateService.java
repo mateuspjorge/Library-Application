@@ -25,15 +25,7 @@ public class StateService {
 	}
 
 	public State stateRegister(StateDTO stateDTO) throws StateException {
-		if (ObjectUtils.isEmpty(stateDTO.getCountryId())) {
-			throw new StateException("O País informado é inválido.");
-		}
-		if (StringUtils.isEmpty(stateDTO.getName())) {
-			throw new StateException("O nome informado é inválido.");
-		}
-		if (StringUtils.isEmpty(stateDTO.getInitials())) {
-			throw new StateException("As iniciais digitadas são inválidas.");
-		}
+		validateState(stateDTO);
 		return stateRepository.save(State.builder()
 										 .countryId(stateDTO.getCountryId())
 										 .name(stateDTO.getName())
@@ -49,18 +41,15 @@ public class StateService {
 		return statesFound;
 	}
 
-	public State searchStateByNameAndInitials(StateDTO stateDTO) throws StateException {
-		if (StringUtils.isEmpty(stateDTO.getName())) {
-			throw new StateException("O nome digitado é inválido.");
-		}
-		if (StringUtils.isEmpty(stateDTO.getInitials())) {
-			throw new StateException("As iniciais digitadas são inválidas.");
-		}
-		return stateRepository.findByNameAndInitials(stateDTO.getName(), stateDTO.getInitials());
+	public State searchStateByCountryAndNameAndInitials(StateDTO stateDTO) throws StateException {
+		validateState(stateDTO);
+		return stateRepository.findByCountryIdAndNameAndInitials(stateDTO.getCountryId(),
+																 stateDTO.getName(),
+																 stateDTO.getInitials());
 	}
 
 	public State updateState(StateDTO stateDTO) throws StateException {
-		State stateFound = searchStateByNameAndInitials(stateDTO);
+		State stateFound = searchStateByCountryAndNameAndInitials(stateDTO);
 		if (ObjectUtils.isEmpty(stateFound)) {
 			throw new StateException("Nenhum registro foi encontrado.");
 		}
@@ -71,11 +60,23 @@ public class StateService {
 	}
 
 	public void deleteState(StateDTO stateDTO) throws StateException {
-		State stateFound = searchStateByNameAndInitials(stateDTO);
+		State stateFound = searchStateByCountryAndNameAndInitials(stateDTO);
 		if (ObjectUtils.isEmpty(stateFound)) {
 			throw new StateException("Nenhum registro foi encontrado.");
 		}
 		stateRepository.delete(stateFound);
+	}
+
+	protected void validateState(StateDTO stateDTO) throws StateException {
+		if (ObjectUtils.isEmpty(stateDTO.getCountryId())) {
+			throw new StateException("O País informado é inválido.");
+		}
+		if (StringUtils.isEmpty(stateDTO.getName())) {
+			throw new StateException("O nome informado é inválido.");
+		}
+		if (StringUtils.isEmpty(stateDTO.getInitials())) {
+			throw new StateException("As iniciais digitadas são inválidas.");
+		}
 	}
 
 }
