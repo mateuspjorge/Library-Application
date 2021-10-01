@@ -25,9 +25,7 @@ public class CountryService {
 	}
 
 	public Country countryRegister(String name) throws CountryException {
-		if (StringUtils.isEmpty(name)) {
-			throw new CountryException("O nome digitado é inválido.");
-		}
+		validateCountry(name);
 		return countryRepository.save(Country.builder().name(name).build());
 	}
 
@@ -40,9 +38,7 @@ public class CountryService {
 	}
 
 	public Country searchCountryByName(String name) throws CountryException {
-		if (StringUtils.isEmpty(name)) {
-			throw new CountryException("O nome digitado é inválido.");
-		}
+		validateCountry(name);
 		return countryRepository.findByName(name);
 	}
 
@@ -61,6 +57,12 @@ public class CountryService {
 			throw new CountryException("Nenhum registro foi encontrado.");
 		}
 		countryRepository.delete(countryFound);
+	}
+
+	protected void validateCountry(String name) throws CountryException {
+		if (StringUtils.isEmpty(name)) {
+			throw new CountryException("O nome informado é inválido.");
+		}
 	}
 
 }
