@@ -16,6 +16,8 @@ import br.com.locationServer.repositorys.ICityRepository;
 @Service
 public class CityService {
 
+	private static final String MSG_ERROR_NENHUM_REGISTRO_ENCONTRADO = "Nenhum registro foi encontrado.";
+
 	private ICityRepository cityRepository;
 
 	@Autowired
@@ -24,7 +26,7 @@ public class CityService {
 		this.cityRepository = cityRepository;
 	}
 
-	public City cityRegister(CityDTO cityDTO) throws CityException {
+	public City registerCity(CityDTO cityDTO) throws CityException {
 		validateCity(cityDTO);
 		return cityRepository.save(City.builder()
 							 .stateId(cityDTO.getStateId())
@@ -35,7 +37,7 @@ public class CityService {
 	public List<City> searchAllCities() throws CityException {
 		List<City> citiesFound = cityRepository.findAll();
 		if (CollectionUtils.isEmpty(citiesFound)) {
-			throw new CityException("Nenhum registro foi encontrado.");
+			throw new CityException(MSG_ERROR_NENHUM_REGISTRO_ENCONTRADO);
 		}
 		return citiesFound;
 	}
@@ -48,7 +50,7 @@ public class CityService {
 	public City updateCity(CityDTO cityDTO) throws CityException {
 		City cityFound = searchCityByStateAndName(cityDTO);
 		if (ObjectUtils.isEmpty(cityFound)) {
-			throw new CityException("Nenhum registro foi encontrado.");
+			throw new CityException(MSG_ERROR_NENHUM_REGISTRO_ENCONTRADO);
 		}
 		cityFound.setStateId(cityDTO.getNewStateId());
 		cityFound.setName(cityDTO.getNewName());
@@ -58,7 +60,7 @@ public class CityService {
 	public void deleteCity(CityDTO cityDTO) throws CityException {
 		City cityFound = searchCityByStateAndName(cityDTO);
 		if (ObjectUtils.isEmpty(cityFound)) {
-			throw new CityException("Nenhum registro foi encontrado.");
+			throw new CityException(MSG_ERROR_NENHUM_REGISTRO_ENCONTRADO);
 		}
 		cityRepository.delete(cityFound);
 	}

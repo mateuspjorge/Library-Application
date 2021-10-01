@@ -34,7 +34,7 @@ public class CityController {
 	@PostMapping("/register")
 	@ResponseBody
 	public ResponseEntity<Boolean> registerCity(@RequestBody CityDTO cityDTO) throws CityException {
-		return new ResponseEntity<>(!ObjectUtils.isEmpty(cityService.cityRegister(cityDTO)), HttpStatus.CREATED);
+		return new ResponseEntity<>(!ObjectUtils.isEmpty(cityService.registerCity(cityDTO)), HttpStatus.CREATED);
 	}
 
 	@GetMapping("/search")

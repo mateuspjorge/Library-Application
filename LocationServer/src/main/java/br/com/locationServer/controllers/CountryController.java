@@ -1,12 +1,10 @@
 package br.com.locationServer.controllers;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +16,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.locationServer.dtos.CountryDTO;
-import br.com.locationServer.entitys.Country;
 import br.com.locationServer.exception.CountryException;
 import br.com.locationServer.services.CountryService;
 
@@ -36,27 +33,20 @@ public class CountryController {
 
 	@PostMapping("/register")
 	@ResponseBody
-	public ResponseEntity<Boolean> countryRegister(@RequestBody CountryDTO countryDTO) throws CountryException {
-		Country registeredCountry = countryService.countryRegister(countryDTO.getName());
-		return new ResponseEntity<Boolean>(!ObjectUtils.isEmpty(registeredCountry), HttpStatus.CREATED);
+	public ResponseEntity<Boolean> registerCountry(@RequestBody CountryDTO countryDTO) throws CountryException {
+		return new ResponseEntity<>(!ObjectUtils.isEmpty(countryService.registerCountry(countryDTO.getName())), HttpStatus.CREATED);
 	}
 
 	@GetMapping("/search")
 	@ResponseBody
 	public ResponseEntity<List<CountryDTO>> searchAllCountries() throws CountryException {
-		List<Country> countriesFound = countryService.searchAllCountries();
-		List<CountryDTO> countryDTOs = new ArrayList<>();
-		if (!CollectionUtils.isEmpty(countriesFound)) {
-			countriesFound.forEach(country -> countryDTOs.add(CountryDTO.builder().name(country.getName()).build()));
-		}
-		return new ResponseEntity<List<CountryDTO>>(countryDTOs, HttpStatus.ACCEPTED);
+		return new ResponseEntity<>(CountryDTO.convertListCountriesToListDto(countryService.searchAllCountries()), HttpStatus.ACCEPTED);
 	}
 
 	@PutMapping("/update")
 	@ResponseBody
 	public ResponseEntity<Boolean> updateCountry(@RequestBody CountryDTO countryDTO) throws CountryException {
-		Country updatedCountry = countryService.updateCountry(countryDTO);
-		return new ResponseEntity<Boolean>(!ObjectUtils.isEmpty(updatedCountry), HttpStatus.CREATED);
+		return new ResponseEntity<>(!ObjectUtils.isEmpty(countryService.updateCountry(countryDTO)), HttpStatus.CREATED);
 	}
 
 	@DeleteMapping("/delete")

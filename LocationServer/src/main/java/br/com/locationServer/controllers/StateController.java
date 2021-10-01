@@ -1,12 +1,10 @@
 package br.com.locationServer.controllers;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +16,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.locationServer.dtos.StateDTO;
-import br.com.locationServer.entitys.State;
 import br.com.locationServer.exception.StateException;
 import br.com.locationServer.services.StateService;
 
@@ -36,31 +33,20 @@ public class StateController {
 
 	@PostMapping("/register")
 	@ResponseBody
-	public ResponseEntity<Boolean> stateRegister(@RequestBody StateDTO stateDTO) throws StateException {
-		State registeredState = stateService.stateRegister(stateDTO);
-		return new ResponseEntity<Boolean>(!ObjectUtils.isEmpty(registeredState), HttpStatus.CREATED);
+	public ResponseEntity<Boolean> registerState(@RequestBody StateDTO stateDTO) throws StateException {
+		return new ResponseEntity<>(!ObjectUtils.isEmpty(stateService.registerState(stateDTO)), HttpStatus.CREATED);
 	}
 
 	@GetMapping("/search")
 	@ResponseBody
 	public ResponseEntity<List<StateDTO>> searchAllStates() throws StateException {
-		List<State> statesFound = stateService.searchAllStates();
-		List<StateDTO> stateDTOs = new ArrayList<>();
-		if (!CollectionUtils.isEmpty(statesFound)) {
-			statesFound.forEach(state -> stateDTOs.add(StateDTO.builder()
-															   .countryId(state.getCountryId())
-															   .name(state.getName())
-															   .initials(state.getInitials())
-															   .build()));
-		}
-		return new ResponseEntity<List<StateDTO>>(stateDTOs, HttpStatus.ACCEPTED);
+		return new ResponseEntity<>(StateDTO.convertListStatesToListDto(stateService.searchAllStates()), HttpStatus.ACCEPTED);
 	}
 
 	@PutMapping("/update")
 	@ResponseBody
 	public ResponseEntity<Boolean> updateState(@RequestBody StateDTO stateDTO) throws StateException {
-		State updatedState = stateService.updateState(stateDTO);
-		return new ResponseEntity<Boolean>(!ObjectUtils.isEmpty(updatedState), HttpStatus.CREATED);
+		return new ResponseEntity<>(!ObjectUtils.isEmpty(stateService.updateState(stateDTO)), HttpStatus.CREATED);
 	}
 
 	@DeleteMapping("/delete")

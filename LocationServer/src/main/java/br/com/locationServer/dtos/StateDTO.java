@@ -1,7 +1,12 @@
 package br.com.locationServer.dtos;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.springframework.util.CollectionUtils;
+
+import br.com.locationServer.entitys.State;
 import lombok.Builder;
 import lombok.Data;
 
@@ -24,5 +29,17 @@ public class StateDTO implements Serializable {
 	private String initials;
 
 	private String newInitials;
+
+	public static List<StateDTO> convertListStatesToListDto(List<State> states) {
+		List<StateDTO> stateDTOs = new ArrayList<>();
+		if (!CollectionUtils.isEmpty(states)) {
+			states.forEach(state -> stateDTOs.add(StateDTO.builder()
+														  .countryId(state.getCountryId())
+														  .name(state.getName())
+														  .initials(state.getInitials())
+														  .build()));
+		}
+		return stateDTOs;
+	}
 
 }

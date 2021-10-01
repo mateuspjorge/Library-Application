@@ -16,6 +16,8 @@ import br.com.locationServer.repositorys.ICountryRepository;
 @Service
 public class CountryService {
 
+	private static final String MSG_ERROR_NENHUM_REGISTRO_ENCONTRADO = "Nenhum registro foi encontrado.";
+
 	private ICountryRepository countryRepository;
 
 	@Autowired
@@ -24,7 +26,7 @@ public class CountryService {
 		this.countryRepository = countryRepository;
 	}
 
-	public Country countryRegister(String name) throws CountryException {
+	public Country registerCountry(String name) throws CountryException {
 		validateCountry(name);
 		return countryRepository.save(Country.builder().name(name).build());
 	}
@@ -32,7 +34,7 @@ public class CountryService {
 	public List<Country> searchAllCountries() throws CountryException {
 		List<Country> countriesFound = countryRepository.findAll();
 		if (CollectionUtils.isEmpty(countriesFound)) {
-			throw new CountryException("Nenhum registro foi encontrado.");
+			throw new CountryException(MSG_ERROR_NENHUM_REGISTRO_ENCONTRADO);
 		}
 		return countriesFound;
 	}
@@ -45,7 +47,7 @@ public class CountryService {
 	public Country updateCountry(CountryDTO countryDTO) throws CountryException {
 		Country countryFound = searchCountryByName(countryDTO.getName());
 		if (ObjectUtils.isEmpty(countryFound)) {
-			throw new CountryException("Nenhum registro foi encontrado.");
+			throw new CountryException(MSG_ERROR_NENHUM_REGISTRO_ENCONTRADO);
 		}
 		countryFound.setName(countryDTO.getNewName());
 		return countryRepository.save(countryFound);
@@ -54,7 +56,7 @@ public class CountryService {
 	public void deleteCountry(String name) throws CountryException {
 		Country countryFound = searchCountryByName(name);
 		if (ObjectUtils.isEmpty(countryFound)) {
-			throw new CountryException("Nenhum registro foi encontrado.");
+			throw new CountryException(MSG_ERROR_NENHUM_REGISTRO_ENCONTRADO);
 		}
 		countryRepository.delete(countryFound);
 	}

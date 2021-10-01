@@ -16,6 +16,8 @@ import br.com.locationServer.repositorys.IStateRepository;
 @Service
 public class StateService {
 
+	private static final String MSG_ERROR_NENHUM_REGISTRO_ENCONTRADO = "Nenhum registro foi encontrado.";
+
 	private IStateRepository stateRepository;
 
 	@Autowired
@@ -24,7 +26,7 @@ public class StateService {
 		this.stateRepository = stateRepository;
 	}
 
-	public State stateRegister(StateDTO stateDTO) throws StateException {
+	public State registerState(StateDTO stateDTO) throws StateException {
 		validateState(stateDTO);
 		return stateRepository.save(State.builder()
 										 .countryId(stateDTO.getCountryId())
@@ -36,7 +38,7 @@ public class StateService {
 	public List<State> searchAllStates() throws StateException {
 		List<State> statesFound = stateRepository.findAll();
 		if (CollectionUtils.isEmpty(statesFound)) {
-			throw new StateException("Nenhum registro foi encontrado.");
+			throw new StateException(MSG_ERROR_NENHUM_REGISTRO_ENCONTRADO);
 		}
 		return statesFound;
 	}
@@ -51,7 +53,7 @@ public class StateService {
 	public State updateState(StateDTO stateDTO) throws StateException {
 		State stateFound = searchStateByCountryAndNameAndInitials(stateDTO);
 		if (ObjectUtils.isEmpty(stateFound)) {
-			throw new StateException("Nenhum registro foi encontrado.");
+			throw new StateException(MSG_ERROR_NENHUM_REGISTRO_ENCONTRADO);
 		}
 		stateFound.setCountryId(stateDTO.getNewCountryId());
 		stateFound.setName(stateDTO.getNewName());
@@ -62,7 +64,7 @@ public class StateService {
 	public void deleteState(StateDTO stateDTO) throws StateException {
 		State stateFound = searchStateByCountryAndNameAndInitials(stateDTO);
 		if (ObjectUtils.isEmpty(stateFound)) {
-			throw new StateException("Nenhum registro foi encontrado.");
+			throw new StateException(MSG_ERROR_NENHUM_REGISTRO_ENCONTRADO);
 		}
 		stateRepository.delete(stateFound);
 	}
