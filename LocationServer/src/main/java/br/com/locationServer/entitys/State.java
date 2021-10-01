@@ -40,10 +40,10 @@ public class State implements Serializable {
 	@Column(name = "ID_COUNTRY", nullable = false)
 	private Long countryId;
 
-	@Column(name = "NM_NAME", nullable = false)
+	@Column(name = "DSC_NAME", nullable = false)
 	private String name;
 
-	@Column(name = "DS_INITIALS", nullable = false, length = 2)
+	@Column(name = "DSC_INITIALS", nullable = false, length = 2)
 	private String initials;
 
 }

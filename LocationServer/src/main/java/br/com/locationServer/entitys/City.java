@@ -40,7 +40,7 @@ public class City implements Serializable {
 	@Column(name = "ID_STATE", nullable = false)
 	private Long stateId;
 
-	@Column(name = "NM_NAME", nullable = false)
+	@Column(name = "DSC_NAME", nullable = false)
 	private String name;
 
 }

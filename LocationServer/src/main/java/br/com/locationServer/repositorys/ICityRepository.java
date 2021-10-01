@@ -13,7 +13,7 @@ public interface ICityRepository extends JpaRepository<City, Long> {
 	@Query("SELECT * "
 		 + "FROM TB_CITY city "
 		 + "WHERE city.ID_STATE = :stateId "
-		 + "AND UPPER(city.NM_NAME) LIKE UPPER(%:name%)")
+		 + "AND UPPER(city.DSC_NAME) LIKE UPPER(%:name%)")
 	City findByStateIdAndName(@Param("stateId") Long stateId, @Param("name") String name);
 
 }

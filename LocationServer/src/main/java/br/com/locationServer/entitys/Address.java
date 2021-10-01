@@ -46,13 +46,13 @@ public class Address implements Serializable {
 	@Column(name = "NR_CEP", nullable = false)
 	private String cep;
 
-	@Column(name = "NM_STREET", nullable = false)
+	@Column(name = "DSC_STREET", nullable = false)
 	private String street;
 
-	@Column(name = "NM_DISTRICT", nullable = false)
+	@Column(name = "DSC_DISTRICT", nullable = false)
 	private String district;
 
-	@Column(name = "NM_COMPLEMENT", nullable = true)
+	@Column(name = "DSC_COMPLEMENT", nullable = true)
 	private String complement;
 
 }

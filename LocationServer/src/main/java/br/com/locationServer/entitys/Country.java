@@ -37,7 +37,7 @@ public class Country implements Serializable {
 	@Column(name = "ID_COUNTRY", nullable = false)
 	private Long id;
 
-	@Column(name = "NM_NAME", nullable = false, length = 30)
+	@Column(name = "DSC_NAME", nullable = false, length = 30)
 	private String name;
 
 }
