@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.locationServer.clients.IStateFeign;
 import br.com.locationServer.dtos.CityDTO;
 import br.com.locationServer.exception.CityException;
+import br.com.locationServer.exception.CountryException;
 import br.com.locationServer.exception.StateException;
 import br.com.locationServer.services.CityService;
 
@@ -37,7 +38,7 @@ public class CityController {
 
 	@PostMapping("/register")
 	@ResponseBody
-	public ResponseEntity<CityDTO> registerCity(@RequestBody CityDTO cityDTO) throws CityException, StateException {
+	public ResponseEntity<CityDTO> registerCity(@RequestBody CityDTO cityDTO) throws CityException, StateException, CountryException {
 		CityDTO registeredCity = CityDTO.convertCityToDto(cityService.registerCity(cityDTO));
 		registeredCity.setState(iStateFeign.searchStateById(registeredCity.getStateId()).getBody());
 		return new ResponseEntity<>(registeredCity, HttpStatus.CREATED);
@@ -52,6 +53,8 @@ public class CityController {
 				cityDto.setState(iStateFeign.searchStateById(cityDto.getStateId()).getBody());
 			} catch (StateException e) {
 				e.printStackTrace();
+			} catch (CountryException e) {
+				e.printStackTrace();
 			}
 		});
 		return new ResponseEntity<>(citiesFound, HttpStatus.ACCEPTED);
@@ -59,7 +62,7 @@ public class CityController {
 
 	@GetMapping("/internal/search-by/{cityId}")
 	@ResponseBody
-	public ResponseEntity<CityDTO> searchCityById(@PathVariable("cityId") Long cityId) throws CityException, StateException {
+	public ResponseEntity<CityDTO> searchCityById(@PathVariable("cityId") Long cityId) throws CityException, StateException, CountryException {
 		CityDTO cityDTO = CityDTO.convertCityToDto(cityService.searchCityById(cityId));
 		cityDTO.setState(iStateFeign.searchStateById(cityDTO.getStateId()).getBody());
 		return new ResponseEntity<>(cityDTO, HttpStatus.ACCEPTED);
@@ -67,7 +70,7 @@ public class CityController {
 
 	@PutMapping("/update")
 	@ResponseBody
-	public ResponseEntity<CityDTO> updateCity(@RequestBody CityDTO cityDTO) throws CityException, StateException {
+	public ResponseEntity<CityDTO> updateCity(@RequestBody CityDTO cityDTO) throws CityException, StateException, CountryException {
 		CityDTO updatedCity = CityDTO.convertCityToDto(cityService.updateCity(cityDTO));
 		updatedCity.setState(iStateFeign.searchStateById(updatedCity.getStateId()).getBody());
 		return new ResponseEntity<>(updatedCity, HttpStatus.CREATED);
