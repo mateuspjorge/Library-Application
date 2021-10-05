@@ -44,25 +44,22 @@ public class CityService {
 
 	public City searchCityByStateAndName(CityDTO cityDTO) throws CityException {
 		validateCity(cityDTO);
-		return cityRepository.findByStateIdAndName(cityDTO.getStateId(), cityDTO.getName());
+		City cityFound = cityRepository.findByStateIdAndName(cityDTO.getStateId(), cityDTO.getName());
+		if (ObjectUtils.isEmpty(cityFound)) {
+			throw new CityException(MSG_ERROR_NENHUM_REGISTRO_ENCONTRADO);
+		}
+		return cityFound;
 	}
 
 	public City updateCity(CityDTO cityDTO) throws CityException {
 		City cityFound = searchCityByStateAndName(cityDTO);
-		if (ObjectUtils.isEmpty(cityFound)) {
-			throw new CityException(MSG_ERROR_NENHUM_REGISTRO_ENCONTRADO);
-		}
 		cityFound.setStateId(cityDTO.getNewStateId());
 		cityFound.setName(cityDTO.getNewName());
 		return cityRepository.save(cityFound);
 	}
 
 	public void deleteCity(CityDTO cityDTO) throws CityException {
-		City cityFound = searchCityByStateAndName(cityDTO);
-		if (ObjectUtils.isEmpty(cityFound)) {
-			throw new CityException(MSG_ERROR_NENHUM_REGISTRO_ENCONTRADO);
-		}
-		cityRepository.delete(cityFound);
+		cityRepository.delete(searchCityByStateAndName(cityDTO));
 	}
 
 	public City searchCityById(Long cityId) throws CityException {

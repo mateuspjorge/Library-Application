@@ -45,16 +45,17 @@ public class StateService {
 
 	public State searchStateByCountryAndNameAndInitials(StateDTO stateDTO) throws StateException {
 		validateState(stateDTO);
-		return stateRepository.findByCountryIdAndNameAndInitials(stateDTO.getCountryId(),
-																 stateDTO.getName(),
-																 stateDTO.getInitials());
+		State stateFound = stateRepository.findByCountryIdAndNameAndInitials(stateDTO.getCountryId(),
+																			 stateDTO.getName(),
+																			 stateDTO.getInitials());
+		if (ObjectUtils.isEmpty(stateFound)) {
+			throw new StateException(MSG_ERROR_NENHUM_REGISTRO_ENCONTRADO);
+		}
+		return stateFound;
 	}
 
 	public State updateState(StateDTO stateDTO) throws StateException {
 		State stateFound = searchStateByCountryAndNameAndInitials(stateDTO);
-		if (ObjectUtils.isEmpty(stateFound)) {
-			throw new StateException(MSG_ERROR_NENHUM_REGISTRO_ENCONTRADO);
-		}
 		stateFound.setCountryId(stateDTO.getNewCountryId());
 		stateFound.setName(stateDTO.getNewName());
 		stateFound.setInitials(stateDTO.getNewInitials());
@@ -62,11 +63,15 @@ public class StateService {
 	}
 
 	public void deleteState(StateDTO stateDTO) throws StateException {
-		State stateFound = searchStateByCountryAndNameAndInitials(stateDTO);
+		stateRepository.delete(searchStateByCountryAndNameAndInitials(stateDTO));
+	}
+
+	public State searchStateById(Long stateId) throws StateException {
+		State stateFound = stateRepository.findById(stateId).orElse(null);
 		if (ObjectUtils.isEmpty(stateFound)) {
 			throw new StateException(MSG_ERROR_NENHUM_REGISTRO_ENCONTRADO);
 		}
-		stateRepository.delete(stateFound);
+		return stateFound;
 	}
 
 	protected void validateState(StateDTO stateDTO) throws StateException {

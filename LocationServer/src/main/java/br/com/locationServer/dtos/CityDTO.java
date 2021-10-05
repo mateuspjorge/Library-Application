@@ -16,6 +16,8 @@ public class CityDTO implements Serializable {
 
 	private static final long serialVersionUID = -3244738527756292908L;
 
+	private Long id;
+
 	private Long stateId;
 
 	private Long newStateId;
@@ -24,8 +26,11 @@ public class CityDTO implements Serializable {
 
 	private String newName;
 
+	private StateDTO state;
+
 	public static CityDTO convertCityToDto(City city) {
 		return CityDTO.builder()
+					  .id(city.getId())
 				      .stateId(city.getStateId())
 				      .name(city.getName())
 				      .build();
@@ -35,6 +40,7 @@ public class CityDTO implements Serializable {
 		List<CityDTO> cityDTOs = new ArrayList<>();
 		if (!CollectionUtils.isEmpty(cities)) {
 			cities.forEach(city -> cityDTOs.add(CityDTO.builder()
+													   .id(city.getId())
 													   .stateId(city.getStateId())
 													   .name(city.getName())
 													   .build()));

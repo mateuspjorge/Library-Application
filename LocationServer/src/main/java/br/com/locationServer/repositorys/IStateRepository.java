@@ -10,11 +10,11 @@ import br.com.locationServer.entitys.State;
 @Repository
 public interface IStateRepository extends JpaRepository<State, Long> {
 
-	@Query("SELECT * "
-		 + "FROM TB_STATE state "
-		 + "WHERE state.ID_COUNTRY = :countryId"
-		 + "AND UPPER(state.DSC_NAME) LIKE UPPER(%:name%) "
-		 + "AND UPPER(state.DSC_INITIALS) LIKE UPPER(%:initials%)")
+	@Query(value = "SELECT * "
+				 + "FROM TB_STATE state "
+				 + "WHERE state.ID_COUNTRY = :countryId"
+				 + "AND UPPER(state.DSC_NAME) LIKE UPPER(%:name%) "
+				 + "AND UPPER(state.DSC_INITIALS) LIKE UPPER(%:initials%)", nativeQuery = true)
 	State findByCountryIdAndNameAndInitials(@Param("countryId") Long countryId,
 											@Param("name") String name,
 											@Param("initials") String initials);

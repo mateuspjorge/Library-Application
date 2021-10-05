@@ -30,10 +30,22 @@ public class StateDTO implements Serializable {
 
 	private String newInitials;
 
+	private CountryDTO country;
+
+	public static StateDTO convertStateToDto(State state) {
+		return StateDTO.builder()
+				       .id(state.getId())
+				       .countryId(state.getCountryId())
+				       .name(state.getName())
+				       .initials(state.getInitials())
+				       .build();
+	}
+
 	public static List<StateDTO> convertListStatesToListDto(List<State> states) {
 		List<StateDTO> stateDTOs = new ArrayList<>();
 		if (!CollectionUtils.isEmpty(states)) {
 			states.forEach(state -> stateDTOs.add(StateDTO.builder()
+														  .id(state.getId())
 														  .countryId(state.getCountryId())
 														  .name(state.getName())
 														  .initials(state.getInitials())

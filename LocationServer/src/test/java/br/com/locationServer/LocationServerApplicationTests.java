@@ -8,6 +8,7 @@ class LocationServerApplicationTests {
 
 	@Test
 	void contextLoads() {
+
 	}
 
 }

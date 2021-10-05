@@ -10,10 +10,10 @@ import br.com.locationServer.entitys.City;
 @Repository
 public interface ICityRepository extends JpaRepository<City, Long> {
 
-	@Query("SELECT * "
-		 + "FROM TB_CITY city "
-		 + "WHERE city.ID_STATE = :stateId "
-		 + "AND UPPER(city.DSC_NAME) LIKE UPPER(%:name%)")
+	@Query(value = "SELECT * "
+				 + "FROM TB_CITY city "
+				 + "WHERE city.ID_STATE = :stateId "
+				 + "AND UPPER(city.DSC_NAME) LIKE UPPER(%:name%) ", nativeQuery = true)
 	City findByStateIdAndName(@Param("stateId") Long stateId, @Param("name") String name);
 
 }

@@ -55,8 +55,7 @@ public class CountryService {
 	}
 
 	public void deleteCountry(String name) throws CountryException {
-		Country countryFound = searchCountryByName(name);
-		countryRepository.delete(countryFound);
+		countryRepository.delete(searchCountryByName(name));
 	}
 
 	public Country searchCountryById(Long countryId) throws CountryException {
