@@ -24,6 +24,13 @@ public class CityDTO implements Serializable {
 
 	private String newName;
 
+	public static CityDTO convertCityToDto(City city) {
+		return CityDTO.builder()
+				      .stateId(city.getStateId())
+				      .name(city.getName())
+				      .build();
+	}
+
 	public static List<CityDTO> convertListCitiesToListDto(List<City> cities) {
 		List<CityDTO> cityDTOs = new ArrayList<>();
 		if (!CollectionUtils.isEmpty(cities)) {

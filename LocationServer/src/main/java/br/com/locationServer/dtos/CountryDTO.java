@@ -22,6 +22,10 @@ public class CountryDTO implements Serializable {
 
 	private String newName;
 
+	public static CountryDTO convertCountryToDto(Country country) {
+		return CountryDTO.builder().id(country.getId()).name(country.getName()).build();
+	}
+
 	public static List<CountryDTO> convertListCountriesToListDto(List<Country> countries) {
 		List<CountryDTO> countryDTOs = new ArrayList<>();
 		if (!CollectionUtils.isEmpty(countries)) {

@@ -65,6 +65,14 @@ public class CityService {
 		cityRepository.delete(cityFound);
 	}
 
+	public City searchCityById(Long cityId) throws CityException {
+		City cityFound = cityRepository.findById(cityId).orElse(null);
+		if (ObjectUtils.isEmpty(cityFound)) {
+			throw new CityException(MSG_ERROR_NENHUM_REGISTRO_ENCONTRADO);
+		}
+		return cityFound;
+	}
+
 	protected void validateCity(CityDTO cityDTO) throws CityException {
 		if (ObjectUtils.isEmpty(cityDTO.getStateId())) {
 			throw new CityException("O Estado informado é inválido.");

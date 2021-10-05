@@ -26,9 +26,9 @@ public class CountryService {
 		this.countryRepository = countryRepository;
 	}
 
-	public Country registerCountry(String name) throws CountryException {
-		validateCountry(name);
-		return countryRepository.save(Country.builder().name(name).build());
+	public Country registerCountry(CountryDTO countryDTO) throws CountryException {
+		validateCountry(countryDTO.getName());
+		return countryRepository.save(Country.builder().name(countryDTO.getName()).build());
 	}
 
 	public List<Country> searchAllCountries() throws CountryException {
@@ -41,24 +41,30 @@ public class CountryService {
 
 	public Country searchCountryByName(String name) throws CountryException {
 		validateCountry(name);
-		return countryRepository.findByName(name);
+		Country countryFound = countryRepository.findByName(name);
+		if (ObjectUtils.isEmpty(countryFound)) {
+			throw new CountryException(MSG_ERROR_NENHUM_REGISTRO_ENCONTRADO);
+		}
+		return countryFound;
 	}
 
 	public Country updateCountry(CountryDTO countryDTO) throws CountryException {
 		Country countryFound = searchCountryByName(countryDTO.getName());
-		if (ObjectUtils.isEmpty(countryFound)) {
-			throw new CountryException(MSG_ERROR_NENHUM_REGISTRO_ENCONTRADO);
-		}
 		countryFound.setName(countryDTO.getNewName());
 		return countryRepository.save(countryFound);
 	}
 
 	public void deleteCountry(String name) throws CountryException {
 		Country countryFound = searchCountryByName(name);
+		countryRepository.delete(countryFound);
+	}
+
+	public Country searchCountryById(Long countryId) throws CountryException {
+		Country countryFound = countryRepository.findById(countryId).orElse(null);
 		if (ObjectUtils.isEmpty(countryFound)) {
 			throw new CountryException(MSG_ERROR_NENHUM_REGISTRO_ENCONTRADO);
 		}
-		countryRepository.delete(countryFound);
+		return countryFound;
 	}
 
 	protected void validateCountry(String name) throws CountryException {
