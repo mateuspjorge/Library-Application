@@ -51,9 +51,7 @@ public class CityController {
 		citiesFound.forEach(cityDto -> {
 			try {
 				cityDto.setState(iStateFeign.searchStateById(cityDto.getStateId()).getBody());
-			} catch (StateException e) {
-				e.printStackTrace();
-			} catch (CountryException e) {
+			} catch (StateException | CountryException e) {
 				e.printStackTrace();
 			}
 		});
