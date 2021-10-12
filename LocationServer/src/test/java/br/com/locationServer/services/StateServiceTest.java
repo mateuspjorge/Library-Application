@@ -131,7 +131,7 @@ public class StateServiceTest {
 	@Test
 	public void shouldThrowErrorOfDeleteStateIfStateNotFound() throws StateException {
 		when(stateRepository.findByCountryIdAndNameAndInitials(any(), any(), any())).thenReturn(null);
-		Assert.assertThrows(StateException.class, () -> stateService.updateState(createStateDto(1L, "Paraíba", "PB")));
+		Assert.assertThrows(StateException.class, () -> stateService.deleteState(createStateDto(1L, "Paraíba", "PB")));
 	}
 
 	@Test
