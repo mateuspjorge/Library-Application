@@ -69,6 +69,14 @@ public class AddressService {
 		addressRepository.delete(addressFound);
 	}
 
+	public Address searchAddressById(Long addressId) throws AddressException {
+		Address addressFound = addressRepository.findById(addressId).orElse(null);
+		if (ObjectUtils.isEmpty(addressFound)) {
+			throw new AddressException(MSG_ERROR_NENHUM_REGISTRO_ENCONTRADO);
+		}
+		return addressFound;
+	}
+
 	protected void validateAddress(AddressDTO addressDTO) throws AddressException {
 		if (ObjectUtils.isEmpty(addressDTO.getCityId())) {
 			throw new AddressException("A Cidade informada é inválida.");

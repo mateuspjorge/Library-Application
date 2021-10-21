@@ -1,9 +1,12 @@
 package br.com.locationServer.dtos;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.util.CollectionUtils;
 
 import br.com.locationServer.entitys.Address;
-import br.com.locationServer.exception.CityException;
 import lombok.Builder;
 import lombok.Data;
 
@@ -41,7 +44,7 @@ public class AddressDTO implements Serializable {
 
 	private CityDTO city;
 
-	public static AddressDTO convertAddressToDto(Address address) throws CityException {
+	public static AddressDTO convertAddressToDto(Address address) {
 		return AddressDTO.builder()
 						 .id(address.getId())
 						 .cityId(address.getCityId())
@@ -51,6 +54,22 @@ public class AddressDTO implements Serializable {
 						 .district(address.getDistrict())
 						 .complement(address.getComplement())
 						 .build();
+	}
+
+	public static List<AddressDTO> convertListAddressToListDto(List<Address> listAddress) {
+		List<AddressDTO> addressDTOs = new ArrayList<>();
+		if (!CollectionUtils.isEmpty(listAddress)) {
+			listAddress.forEach(address -> addressDTOs.add(AddressDTO.builder()
+																	 .id(address.getId())
+																	 .cityId(address.getCityId())
+																	 .number(address.getNumber())
+																	 .cep(address.getCep())
+																	 .street(address.getStreet())
+																	 .district(address.getDistrict())
+																	 .complement(address.getComplement())
+																	 .build()));
+		}
+		return addressDTOs;
 	}
 
 }
