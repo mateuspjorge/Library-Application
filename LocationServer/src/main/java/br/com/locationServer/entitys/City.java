@@ -1,12 +1,18 @@
 package br.com.locationServer.entitys;
 
 import java.io.Serializable;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -37,10 +43,21 @@ public class City implements Serializable {
 	@Column(name = "ID_CITY", nullable = false)
 	private Long id;
 
+	@ManyToOne
+	@JoinColumn(name = "ID_STATE")
 	@Column(name = "ID_STATE", nullable = false)
-	private Long stateId;
+	private State state;
 
 	@Column(name = "DSC_NAME", nullable = false)
 	private String name;
+
+	@OneToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH })
+	@JoinTable(
+			   name = "TB_CITY_ADDRESSES",
+			   joinColumns = @JoinColumn(name = "ID_CITY",
+										 referencedColumnName = "ID_CITY"),
+			   inverseJoinColumns = @JoinColumn(name = "ID_ADDRESS",
+												referencedColumnName = "ID_ADDRESS"))
+	private List<Address> addresses;
 
 }

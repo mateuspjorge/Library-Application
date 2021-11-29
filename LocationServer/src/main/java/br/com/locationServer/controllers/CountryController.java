@@ -34,25 +34,30 @@ public class CountryController {
 	@PostMapping("/register")
 	@ResponseBody
 	public ResponseEntity<CountryDTO> registerCountry(@RequestBody CountryDTO countryDTO) throws CountryException {
-		return new ResponseEntity<>(CountryDTO.convertCountryToDto(countryService.registerCountry(countryDTO)), HttpStatus.CREATED);
+		return new ResponseEntity<>(CountryDTO.convertCountryToDto(countryService.registerCountry(countryDTO)),
+				HttpStatus.CREATED);
 	}
 
 	@GetMapping("/search")
 	@ResponseBody
 	public ResponseEntity<List<CountryDTO>> searchAllCountries() throws CountryException {
-		return new ResponseEntity<>(CountryDTO.convertListCountriesToListDto(countryService.searchAllCountries()), HttpStatus.ACCEPTED);
+		return new ResponseEntity<>(CountryDTO.convertListCountriesToListDto(countryService.searchAllCountries()),
+				HttpStatus.ACCEPTED);
 	}
 
 	@GetMapping("/internal/search-by/{countryId}")
 	@ResponseBody
-	public ResponseEntity<CountryDTO> searchCountryById(@PathVariable("countryId") Long countryId) throws CountryException {
-		return new ResponseEntity<>(CountryDTO.convertCountryToDto(countryService.searchCountryById(countryId)), HttpStatus.OK);
+	public ResponseEntity<CountryDTO> searchCountryById(@PathVariable("countryId") Long countryId)
+			throws CountryException {
+		return new ResponseEntity<>(CountryDTO.convertCountryToDto(countryService.searchCountryById(countryId)),
+				HttpStatus.OK);
 	}
 
 	@PutMapping("/update")
 	@ResponseBody
 	public ResponseEntity<CountryDTO> updateCountry(@RequestBody CountryDTO countryDTO) throws CountryException {
-		return new ResponseEntity<>(CountryDTO.convertCountryToDto(countryService.updateCountry(countryDTO)), HttpStatus.CREATED);
+		return new ResponseEntity<>(CountryDTO.convertCountryToDto(countryService.updateCountry(countryDTO)),
+				HttpStatus.CREATED);
 	}
 
 	@DeleteMapping("/delete")

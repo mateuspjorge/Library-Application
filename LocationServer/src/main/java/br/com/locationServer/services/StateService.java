@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 
+import br.com.locationServer.dtos.CountryDTO;
 import br.com.locationServer.dtos.StateDTO;
 import br.com.locationServer.entitys.State;
 import br.com.locationServer.exception.StateException;
@@ -29,9 +30,9 @@ public class StateService {
 	public State registerState(StateDTO stateDTO) throws StateException {
 		validateState(stateDTO);
 		return stateRepository.save(State.builder()
-										 .countryId(stateDTO.getCountryId())
 										 .name(stateDTO.getName())
 										 .initials(stateDTO.getInitials())
+										 .country(CountryDTO.con)
 										 .build());
 	}
 
@@ -75,7 +76,7 @@ public class StateService {
 	}
 
 	protected void validateState(StateDTO stateDTO) throws StateException {
-		if (ObjectUtils.isEmpty(stateDTO.getCountryId())) {
+		if (ObjectUtils.isEmpty(stateDTO.getCountry())) {
 			throw new StateException("O País informado é inválido.");
 		}
 		if (StringUtils.isEmpty(stateDTO.getName())) {

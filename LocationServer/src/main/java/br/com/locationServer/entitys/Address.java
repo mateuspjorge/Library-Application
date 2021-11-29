@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -37,8 +39,10 @@ public class Address implements Serializable {
 	@Column(name = "ID_ADDRESS", nullable = false)
 	private Long id;
 
+	@ManyToOne
+	@JoinColumn(name = "ID_CITY")
 	@Column(name = "ID_CITY", nullable = false)
-	private Long cityId;
+	private City city;
 
 	@Column(name = "NR_NUMBER", nullable = false)
 	private Integer number;

@@ -22,20 +22,28 @@ public class CountryDTO implements Serializable {
 
 	private String newName;
 
+	private List<StateDTO> states;
+
 	public static CountryDTO convertCountryToDto(Country country) {
 		return CountryDTO.builder()
 						 .id(country.getId())
 						 .name(country.getName())
+						 .states(StateDTO.convertListStatesToListDto(country.getStates()))
+						 .build();
+	}
+
+	public static Country convertDtoToCountry(CountryDTO countryDto) {
+		return CountryDTO.builder()
+						 .id(countryDto.getId())
+						 .name(countryDto.getName())
+						 .states(StateDTO.convertListStatesToListDto(countryDto.getStates()))
 						 .build();
 	}
 
 	public static List<CountryDTO> convertListCountriesToListDto(List<Country> countries) {
 		List<CountryDTO> countryDTOs = new ArrayList<>();
 		if (!CollectionUtils.isEmpty(countries)) {
-			countries.forEach(country -> countryDTOs.add(CountryDTO.builder()
-																   .id(country.getId())
-																   .name(country.getName())
-																   .build()));
+			countries.forEach(country -> countryDTOs.add(convertCountryToDto(country)));
 		}
 		return countryDTOs;
 	}

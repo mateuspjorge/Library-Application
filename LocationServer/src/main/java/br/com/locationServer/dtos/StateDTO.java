@@ -18,10 +18,6 @@ public class StateDTO implements Serializable {
 
 	private Long id;
 
-	private Long countryId;
-
-	private Long newCountryId;
-
 	private String name;
 
 	private String newName;
@@ -32,26 +28,44 @@ public class StateDTO implements Serializable {
 
 	private CountryDTO country;
 
+	private CountryDTO newCountry;
+
+	private List<CityDTO> cities;
+
 	public static StateDTO convertStateToDto(State state) {
 		return StateDTO.builder()
 				       .id(state.getId())
-				       .countryId(state.getCountryId())
 				       .name(state.getName())
 				       .initials(state.getInitials())
+				       .country(CountryDTO.convertCountryToDto(state.getCountry()))
+				       .cities(CityDTO.convertListCitiesToListDto(state.getCities()))
 				       .build();
+	}
+
+	public static StateDTO convertDtoToState(StateDTO stateDto) {
+		return State.builder()
+			        .id(stateDto.getId())
+			        .name(stateDto.getName())
+			        .initials(stateDto.getInitials())
+			        .country(CountryDTO.convertCountryToDto(stateDto.getCountry()))
+			        .cities(CityDTO.convertListCitiesToListDto(stateDto.getCities()))
+			        .build();
 	}
 
 	public static List<StateDTO> convertListStatesToListDto(List<State> states) {
 		List<StateDTO> stateDTOs = new ArrayList<>();
 		if (!CollectionUtils.isEmpty(states)) {
-			states.forEach(state -> stateDTOs.add(StateDTO.builder()
-														  .id(state.getId())
-														  .countryId(state.getCountryId())
-														  .name(state.getName())
-														  .initials(state.getInitials())
-														  .build()));
+			states.forEach(state -> stateDTOs.add(convertStateToDto(state)));
 		}
 		return stateDTOs;
+	}
+
+	public static List<State> convertListDtoToListStates(List<StateDTO> statesDtos) {
+		List<StateDTO> states = new ArrayList<>();
+		if (!CollectionUtils.isEmpty(statesDtos)) {
+			statesDtos.forEach(dto -> states.add(convertStateToDto(dto)));
+		}
+		return states;
 	}
 
 }
