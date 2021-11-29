@@ -43,13 +43,13 @@ public class City implements Serializable {
 	@Column(name = "ID_CITY", nullable = false)
 	private Long id;
 
+	@Column(name = "DSC_NAME", nullable = false)
+	private String name;
+
 	@ManyToOne
 	@JoinColumn(name = "ID_STATE")
 	@Column(name = "ID_STATE", nullable = false)
 	private State state;
-
-	@Column(name = "DSC_NAME", nullable = false)
-	private String name;
 
 	@OneToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH })
 	@JoinTable(

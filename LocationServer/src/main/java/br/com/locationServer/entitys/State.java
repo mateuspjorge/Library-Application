@@ -43,7 +43,7 @@ public class State implements Serializable {
 	@Column(name = "ID_STATE", nullable = false)
 	private Long id;
 
-	@Column(name = "DSC_NAME", nullable = false)
+	@Column(name = "DSC_NAME", unique = true, nullable = false)
 	private String name;
 
 	@Column(name = "DSC_INITIALS", nullable = false, length = 2)

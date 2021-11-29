@@ -1,12 +1,12 @@
 package br.com.locationServer.services;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
-import org.springframework.util.ObjectUtils;
 
 import br.com.locationServer.dtos.CountryDTO;
 import br.com.locationServer.entitys.Country;
@@ -28,7 +28,7 @@ public class CountryService {
 
 	public Country registerCountry(CountryDTO countryDTO) throws CountryException {
 		validateCountry(countryDTO.getName());
-		return countryRepository.save(Country.builder().name(countryDTO.getName()).build());
+		return countryRepository.save(CountryDTO.convertDtoToCountry(countryDTO));
 	}
 
 	public List<Country> searchAllCountries() throws CountryException {
@@ -42,7 +42,7 @@ public class CountryService {
 	public Country searchCountryByName(String name) throws CountryException {
 		validateCountry(name);
 		Country countryFound = countryRepository.findByName(name);
-		if (ObjectUtils.isEmpty(countryFound)) {
+		if (Objects.isNull(countryFound)) {
 			throw new CountryException(MSG_ERROR_NENHUM_REGISTRO_ENCONTRADO);
 		}
 		return countryFound;
@@ -50,7 +50,9 @@ public class CountryService {
 
 	public Country updateCountry(CountryDTO countryDTO) throws CountryException {
 		Country countryFound = searchCountryByName(countryDTO.getName());
-		countryFound.setName(countryDTO.getNewName());
+		if (StringUtils.isNotBlank(countryDTO.getNewName())) {
+			countryFound.setName(countryDTO.getNewName());
+		}
 		return countryRepository.save(countryFound);
 	}
 
@@ -60,14 +62,14 @@ public class CountryService {
 
 	public Country searchCountryById(Long countryId) throws CountryException {
 		Country countryFound = countryRepository.findById(countryId).orElse(null);
-		if (ObjectUtils.isEmpty(countryFound)) {
+		if (Objects.isNull(countryFound)) {
 			throw new CountryException(MSG_ERROR_NENHUM_REGISTRO_ENCONTRADO);
 		}
 		return countryFound;
 	}
 
 	protected void validateCountry(String name) throws CountryException {
-		if (StringUtils.isEmpty(name)) {
+		if (StringUtils.isBlank(name)) {
 			throw new CountryException("O nome informado é inválido.");
 		}
 	}

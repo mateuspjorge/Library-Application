@@ -42,13 +42,13 @@ public class StateDTO implements Serializable {
 				       .build();
 	}
 
-	public static StateDTO convertDtoToState(StateDTO stateDto) {
+	public static State convertDtoToState(StateDTO stateDto) {
 		return State.builder()
 			        .id(stateDto.getId())
 			        .name(stateDto.getName())
 			        .initials(stateDto.getInitials())
-			        .country(CountryDTO.convertCountryToDto(stateDto.getCountry()))
-			        .cities(CityDTO.convertListCitiesToListDto(stateDto.getCities()))
+			        .country(CountryDTO.convertDtoToCountry(stateDto.getCountry()))
+			        .cities(CityDTO.convertListDtoToListCities(stateDto.getCities()))
 			        .build();
 	}
 
@@ -61,9 +61,9 @@ public class StateDTO implements Serializable {
 	}
 
 	public static List<State> convertListDtoToListStates(List<StateDTO> statesDtos) {
-		List<StateDTO> states = new ArrayList<>();
+		List<State> states = new ArrayList<>();
 		if (!CollectionUtils.isEmpty(statesDtos)) {
-			statesDtos.forEach(dto -> states.add(convertStateToDto(dto)));
+			statesDtos.forEach(dto -> states.add(convertDtoToState(dto)));
 		}
 		return states;
 	}

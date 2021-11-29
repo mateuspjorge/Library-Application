@@ -39,11 +39,6 @@ public class Address implements Serializable {
 	@Column(name = "ID_ADDRESS", nullable = false)
 	private Long id;
 
-	@ManyToOne
-	@JoinColumn(name = "ID_CITY")
-	@Column(name = "ID_CITY", nullable = false)
-	private City city;
-
 	@Column(name = "NR_NUMBER", nullable = false)
 	private Integer number;
 
@@ -58,5 +53,10 @@ public class Address implements Serializable {
 
 	@Column(name = "DSC_COMPLEMENT", nullable = true)
 	private String complement;
+
+	@ManyToOne
+	@JoinColumn(name = "ID_CITY")
+	@Column(name = "ID_CITY", nullable = false)
+	private City city;
 
 }

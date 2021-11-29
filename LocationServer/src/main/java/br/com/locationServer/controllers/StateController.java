@@ -15,9 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.locationServer.clients.ICountryFeign;
 import br.com.locationServer.dtos.StateDTO;
-import br.com.locationServer.exception.CountryException;
 import br.com.locationServer.exception.StateException;
 import br.com.locationServer.services.StateService;
 
@@ -26,51 +24,35 @@ import br.com.locationServer.services.StateService;
 public class StateController {
 
 	private StateService stateService;
-	private ICountryFeign iCountryFeign;
 
 	@Autowired
-	public StateController(StateService stateService, ICountryFeign iCountryFeign) {
+	public StateController(StateService stateService) {
 		super();
 		this.stateService = stateService;
-		this.iCountryFeign = iCountryFeign;
 	}
 
 	@PostMapping("/register")
 	@ResponseBody
-	public ResponseEntity<StateDTO> registerState(@RequestBody StateDTO stateDTO) throws StateException, CountryException {
-		StateDTO registeredState = StateDTO.convertStateToDto(stateService.registerState(stateDTO));
-		registeredState.setCountry(iCountryFeign.searchCountryById(registeredState.getCountryId()).getBody());
-		return new ResponseEntity<>(registeredState, HttpStatus.CREATED);
+	public ResponseEntity<StateDTO> registerState(@RequestBody StateDTO stateDTO) throws StateException {
+		return new ResponseEntity<>(StateDTO.convertStateToDto(stateService.registerState(stateDTO)), HttpStatus.CREATED);
 	}
 
 	@GetMapping("/search")
 	@ResponseBody
 	public ResponseEntity<List<StateDTO>> searchAllStates() throws StateException {
-		List<StateDTO> statesFound = StateDTO.convertListStatesToListDto(stateService.searchAllStates());
-		statesFound.forEach(stateDto -> {
-			try {
-				stateDto.setCountry(iCountryFeign.searchCountryById(stateDto.getCountryId()).getBody());
-			} catch (CountryException e) {
-				e.printStackTrace();
-			}
-		});
-		return new ResponseEntity<>(statesFound, HttpStatus.ACCEPTED);
+		return new ResponseEntity<>(StateDTO.convertListStatesToListDto(stateService.searchAllStates()), HttpStatus.ACCEPTED);
 	}
 
 	@GetMapping("/internal/search-by/{stateId}")
 	@ResponseBody
-	public ResponseEntity<StateDTO> searchStateById(@PathVariable("stateId") Long stateId) throws StateException, CountryException {
-		StateDTO stateFound = StateDTO.convertStateToDto(stateService.searchStateById(stateId));
-		stateFound.setCountry(iCountryFeign.searchCountryById(stateFound.getCountryId()).getBody());
-		return new ResponseEntity<>(stateFound, HttpStatus.OK);
+	public ResponseEntity<StateDTO> searchStateById(@PathVariable("stateId") Long stateId) throws StateException {
+		return new ResponseEntity<>(StateDTO.convertStateToDto(stateService.searchStateById(stateId)), HttpStatus.OK);
 	}
 
 	@PutMapping("/update")
 	@ResponseBody
-	public ResponseEntity<StateDTO> updateState(@RequestBody StateDTO stateDTO) throws StateException, CountryException {
-		StateDTO updatedState = StateDTO.convertStateToDto(stateService.updateState(stateDTO));
-		updatedState.setCountry(iCountryFeign.searchCountryById(updatedState.getCountryId()).getBody());
-		return new ResponseEntity<>(updatedState, HttpStatus.CREATED);
+	public ResponseEntity<StateDTO> updateState(@RequestBody StateDTO stateDTO) throws StateException {
+		return new ResponseEntity<>(StateDTO.convertStateToDto(stateService.updateState(stateDTO)), HttpStatus.CREATED);
 	}
 
 	@DeleteMapping("/delete")

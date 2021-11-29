@@ -33,11 +33,11 @@ public class CountryDTO implements Serializable {
 	}
 
 	public static Country convertDtoToCountry(CountryDTO countryDto) {
-		return CountryDTO.builder()
-						 .id(countryDto.getId())
-						 .name(countryDto.getName())
-						 .states(StateDTO.convertListStatesToListDto(countryDto.getStates()))
-						 .build();
+		return Country.builder()
+					  .id(countryDto.getId())
+					  .name(countryDto.getName())
+					  .states(StateDTO.convertListDtoToListStates(countryDto.getStates()))
+					  .build();
 	}
 
 	public static List<CountryDTO> convertListCountriesToListDto(List<Country> countries) {

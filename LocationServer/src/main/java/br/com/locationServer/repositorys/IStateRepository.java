@@ -12,11 +12,9 @@ public interface IStateRepository extends JpaRepository<State, Long> {
 
 	@Query(value = "SELECT * "
 				 + "FROM TB_STATE state "
-				 + "WHERE state.ID_COUNTRY = :countryId"
-				 + "AND UPPER(state.DSC_NAME) LIKE UPPER(%:name%) "
+				 + "WHERE UPPER(state.DSC_NAME) LIKE UPPER(%:name%) "
 				 + "AND UPPER(state.DSC_INITIALS) LIKE UPPER(%:initials%)", nativeQuery = true)
-	State findByCountryIdAndNameAndInitials(@Param("countryId") Long countryId,
-											@Param("name") String name,
-											@Param("initials") String initials);
+	State findByNameAndInitials(@Param("name") String name,
+								@Param("initials") String initials);
 
 }
