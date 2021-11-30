@@ -43,7 +43,7 @@ public class City implements Serializable {
 	@Column(name = "ID_CITY", nullable = false)
 	private Long id;
 
-	@Column(name = "DSC_NAME", nullable = false)
+	@Column(name = "DSC_NAME", unique = true, nullable = false)
 	private String name;
 
 	@ManyToOne

@@ -15,32 +15,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.locationServer.clients.ICityFeign;
 import br.com.locationServer.dtos.AddressDTO;
 import br.com.locationServer.exception.AddressException;
-import br.com.locationServer.exception.CityException;
-import br.com.locationServer.exception.StateException;
-import br.com.locationServer.services.AddressService;
+import br.com.locationServer.services.impl.AddressServiceImpl;
 
 @RestController
 @RequestMapping(path = "/address")
-public class AddressController {
+public class AddressControllerImpl {
 
-	private AddressService addressService;
-	private ICityFeign iCityFeign;
+	private AddressServiceImpl addressService;
 
 	@Autowired
-	public AddressController(AddressService addressService, ICityFeign iCityFeign) {
+	public AddressControllerImpl(AddressServiceImpl addressService) {
 		super();
 		this.addressService = addressService;
-		this.iCityFeign = iCityFeign;
 	}
 
 	@PostMapping("/register")
 	@ResponseBody
-	public ResponseEntity<AddressDTO> registerAddress(@RequestBody AddressDTO addressDTO) throws AddressException, CityException, StateException {
+	public ResponseEntity<AddressDTO> registerAddress(@RequestBody AddressDTO addressDTO) throws AddressException {
 		AddressDTO registeredAddress = AddressDTO.convertAddressToDto(addressService.registerAddress(addressDTO));
-		registeredAddress.setCity(iCityFeign.searchCityById(registeredAddress.getCityId()).getBody());
 		return new ResponseEntity<>(registeredAddress, HttpStatus.CREATED);
 	}
 
@@ -48,29 +42,20 @@ public class AddressController {
 	@ResponseBody
 	public ResponseEntity<List<AddressDTO>> searchAllAddress() throws AddressException {
 		List<AddressDTO> addressFound = AddressDTO.convertListAddressToListDto(addressService.searchAllAddress());
-		addressFound.forEach(addressDto -> {
-			try {
-				addressDto.setCity(iCityFeign.searchCityById(addressDto.getCityId()).getBody());
-			} catch (CityException | StateException e) {
-				e.printStackTrace();
-			}
-		});
 		return new ResponseEntity<>(addressFound, HttpStatus.ACCEPTED);
 	}
 
 	@GetMapping("/internal/search-by/{addressId}")
 	@ResponseBody
-	public ResponseEntity<AddressDTO> searchAddressById(@PathVariable("addressId") Long addressId) throws AddressException, CityException, StateException {
+	public ResponseEntity<AddressDTO> searchAddressById(@PathVariable("addressId") Long addressId) throws AddressException {
 		AddressDTO addressFound = AddressDTO.convertAddressToDto(addressService.searchAddressById(addressId));
-		addressFound.setCity(iCityFeign.searchCityById(addressFound.getCityId()).getBody());
 		return new ResponseEntity<>(addressFound, HttpStatus.ACCEPTED);
 	}
 
 	@PutMapping("/update")
 	@ResponseBody
-	public ResponseEntity<AddressDTO> updateAddress(@RequestBody AddressDTO addressDTO) throws AddressException, CityException, StateException {
+	public ResponseEntity<AddressDTO> updateAddress(@RequestBody AddressDTO addressDTO) throws AddressException {
 		AddressDTO updatedAddress = AddressDTO.convertAddressToDto(addressService.updateAddress(addressDTO));
-		updatedAddress.setCity(iCityFeign.searchCityById(updatedAddress.getCityId()).getBody());
 		return new ResponseEntity<>(updatedAddress, HttpStatus.CREATED);
 	}
 

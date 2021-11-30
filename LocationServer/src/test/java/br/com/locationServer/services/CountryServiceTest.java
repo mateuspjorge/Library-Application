@@ -18,6 +18,7 @@ import br.com.locationServer.dtos.CountryDTO;
 import br.com.locationServer.entitys.Country;
 import br.com.locationServer.exception.CountryException;
 import br.com.locationServer.repositorys.ICountryRepository;
+import br.com.locationServer.services.impl.CountryServiceImpl;
 
 @SpringBootTest
 public class CountryServiceTest {
@@ -26,7 +27,7 @@ public class CountryServiceTest {
 	private ICountryRepository countryRepository;
 
 	@InjectMocks
-	private CountryService countryService;
+	private CountryServiceImpl countryService;
 
 	@SuppressWarnings("deprecation")
 	@Before

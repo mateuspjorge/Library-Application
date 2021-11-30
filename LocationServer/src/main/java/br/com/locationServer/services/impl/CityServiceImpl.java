@@ -1,39 +1,40 @@
-package br.com.locationServer.services;
+package br.com.locationServer.services.impl;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
-import org.springframework.util.ObjectUtils;
 
 import br.com.locationServer.dtos.CityDTO;
+import br.com.locationServer.dtos.StateDTO;
 import br.com.locationServer.entitys.City;
 import br.com.locationServer.exception.CityException;
 import br.com.locationServer.repositorys.ICityRepository;
+import br.com.locationServer.services.ICityService;
 
 @Service
-public class CityService {
+public class CityServiceImpl implements ICityService {
 
 	private static final String MSG_ERROR_NENHUM_REGISTRO_ENCONTRADO = "Nenhum registro foi encontrado.";
 
 	private ICityRepository cityRepository;
 
 	@Autowired
-	public CityService(ICityRepository cityRepository) {
+	public CityServiceImpl(ICityRepository cityRepository) {
 		super();
 		this.cityRepository = cityRepository;
 	}
 
+	@Override
 	public City registerCity(CityDTO cityDTO) throws CityException {
 		validateCity(cityDTO);
-		return cityRepository.save(City.builder()
-							 .stateId(cityDTO.getStateId())
-							 .name(cityDTO.getName())
-							 .build());
+		return cityRepository.save(CityDTO.convertDtoToCity(cityDTO));
 	}
 
+	@Override
 	public List<City> searchAllCities() throws CityException {
 		List<City> citiesFound = cityRepository.findAll();
 		if (CollectionUtils.isEmpty(citiesFound)) {
@@ -42,39 +43,47 @@ public class CityService {
 		return citiesFound;
 	}
 
-	public City searchCityByStateAndName(CityDTO cityDTO) throws CityException {
+	@Override
+	public City searchCityByName(CityDTO cityDTO) throws CityException {
 		validateCity(cityDTO);
-		City cityFound = cityRepository.findByStateIdAndName(cityDTO.getStateId(), cityDTO.getName());
-		if (ObjectUtils.isEmpty(cityFound)) {
+		City cityFound = cityRepository.findByName(cityDTO.getName());
+		if (Objects.isNull(cityFound)) {
 			throw new CityException(MSG_ERROR_NENHUM_REGISTRO_ENCONTRADO);
 		}
 		return cityFound;
 	}
 
+	@Override
+	public City searchCityById(Long cityId) throws CityException {
+		City cityFound = cityRepository.findById(cityId).orElse(null);
+		if (Objects.isNull(cityFound)) {
+			throw new CityException(MSG_ERROR_NENHUM_REGISTRO_ENCONTRADO);
+		}
+		return cityFound;
+	}
+
+	@Override
 	public City updateCity(CityDTO cityDTO) throws CityException {
-		City cityFound = searchCityByStateAndName(cityDTO);
-		cityFound.setStateId(cityDTO.getNewStateId());
-		cityFound.setName(cityDTO.getNewName());
+		City cityFound = searchCityByName(cityDTO);
+		if (Objects.nonNull(cityDTO.getState())) {
+			cityFound.setState(StateDTO.convertDtoToState(cityDTO.getNewState()));
+		}
+		if (StringUtils.isBlank(cityDTO.getName())) {
+			cityFound.setName(cityDTO.getNewName());
+		}
 		return cityRepository.save(cityFound);
 	}
 
+	@Override
 	public void deleteCity(CityDTO cityDTO) throws CityException {
-		cityRepository.delete(searchCityByStateAndName(cityDTO));
-	}
-
-	public City searchCityById(Long cityId) throws CityException {
-		City cityFound = cityRepository.findById(cityId).orElse(null);
-		if (ObjectUtils.isEmpty(cityFound)) {
-			throw new CityException(MSG_ERROR_NENHUM_REGISTRO_ENCONTRADO);
-		}
-		return cityFound;
+		cityRepository.delete(searchCityByName(cityDTO));
 	}
 
 	protected void validateCity(CityDTO cityDTO) throws CityException {
-		if (ObjectUtils.isEmpty(cityDTO.getStateId())) {
+		if (Objects.isNull(cityDTO.getState())) {
 			throw new CityException("O Estado informado é inválido.");
 		}
-		if (StringUtils.isEmpty(cityDTO.getName())) {
+		if (StringUtils.isBlank(cityDTO.getName())) {
 			throw new CityException("O nome informado é inválido.");
 		}
 	}

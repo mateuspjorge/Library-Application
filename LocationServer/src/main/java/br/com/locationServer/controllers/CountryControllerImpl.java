@@ -17,16 +17,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.locationServer.dtos.CountryDTO;
 import br.com.locationServer.exception.CountryException;
-import br.com.locationServer.services.CountryService;
+import br.com.locationServer.services.impl.CountryServiceImpl;
 
 @RestController
 @RequestMapping(path = "/country")
-public class CountryController {
+public class CountryControllerImpl {
 
-	private CountryService countryService;
+	private CountryServiceImpl countryService;
 
 	@Autowired
-	public CountryController(CountryService countryService) {
+	public CountryControllerImpl(CountryServiceImpl countryService) {
 		super();
 		this.countryService = countryService;
 	}

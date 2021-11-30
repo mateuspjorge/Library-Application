@@ -18,6 +18,7 @@ import br.com.locationServer.dtos.StateDTO;
 import br.com.locationServer.entitys.State;
 import br.com.locationServer.exception.StateException;
 import br.com.locationServer.repositorys.IStateRepository;
+import br.com.locationServer.services.impl.StateServiceImpl;
 
 @SpringBootTest
 public class StateServiceTest {
@@ -26,7 +27,7 @@ public class StateServiceTest {
 	private IStateRepository stateRepository;
 
 	@InjectMocks
-	private StateService stateService;
+	private StateServiceImpl stateService;
 
 	@SuppressWarnings("deprecation")
 	@Before

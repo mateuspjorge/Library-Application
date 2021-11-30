@@ -17,16 +17,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.locationServer.dtos.StateDTO;
 import br.com.locationServer.exception.StateException;
-import br.com.locationServer.services.StateService;
+import br.com.locationServer.services.impl.StateServiceImpl;
 
 @RestController
 @RequestMapping(path = "/state")
-public class StateController {
+public class StateControllerImpl {
 
-	private StateService stateService;
+	private StateServiceImpl stateService;
 
 	@Autowired
-	public StateController(StateService stateService) {
+	public StateControllerImpl(StateServiceImpl stateService) {
 		super();
 		this.stateService = stateService;
 	}

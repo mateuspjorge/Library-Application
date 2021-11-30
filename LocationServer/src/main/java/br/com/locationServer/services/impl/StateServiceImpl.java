@@ -1,4 +1,4 @@
-package br.com.locationServer.services;
+package br.com.locationServer.services.impl;
 
 import java.util.List;
 import java.util.Objects;
@@ -13,25 +13,28 @@ import br.com.locationServer.dtos.StateDTO;
 import br.com.locationServer.entitys.State;
 import br.com.locationServer.exception.StateException;
 import br.com.locationServer.repositorys.IStateRepository;
+import br.com.locationServer.services.IStateService;
 
 @Service
-public class StateService {
+public class StateServiceImpl implements IStateService {
 
 	private static final String MSG_ERROR_NENHUM_REGISTRO_ENCONTRADO = "Nenhum registro foi encontrado.";
 
 	private IStateRepository stateRepository;
 
 	@Autowired
-	public StateService(IStateRepository stateRepository) {
+	public StateServiceImpl(IStateRepository stateRepository) {
 		super();
 		this.stateRepository = stateRepository;
 	}
 
+	@Override
 	public State registerState(StateDTO stateDTO) throws StateException {
 		validateState(stateDTO);
 		return stateRepository.save(StateDTO.convertDtoToState(stateDTO));
 	}
 
+	@Override
 	public List<State> searchAllStates() throws StateException {
 		List<State> statesFound = stateRepository.findAll();
 		if (CollectionUtils.isEmpty(statesFound)) {
@@ -40,6 +43,7 @@ public class StateService {
 		return statesFound;
 	}
 
+	@Override
 	public State searchStateByNameAndInitials(StateDTO stateDTO) throws StateException {
 		validateState(stateDTO);
 		State stateFound = stateRepository.findByNameAndInitials(stateDTO.getName(), stateDTO.getInitials());
@@ -49,6 +53,16 @@ public class StateService {
 		return stateFound;
 	}
 
+	@Override
+	public State searchStateById(Long stateId) throws StateException {
+		State stateFound = stateRepository.findById(stateId).orElse(null);
+		if (Objects.isNull(stateFound)) {
+			throw new StateException(MSG_ERROR_NENHUM_REGISTRO_ENCONTRADO);
+		}
+		return stateFound;
+	}
+
+	@Override
 	public State updateState(StateDTO stateDTO) throws StateException {
 		State stateFound = searchStateByNameAndInitials(stateDTO);
 		if (Objects.nonNull(stateDTO.getNewCountry())) {
@@ -63,16 +77,9 @@ public class StateService {
 		return stateRepository.save(stateFound);
 	}
 
+	@Override
 	public void deleteState(StateDTO stateDTO) throws StateException {
 		stateRepository.delete(searchStateByNameAndInitials(stateDTO));
-	}
-
-	public State searchStateById(Long stateId) throws StateException {
-		State stateFound = stateRepository.findById(stateId).orElse(null);
-		if (Objects.isNull(stateFound)) {
-			throw new StateException(MSG_ERROR_NENHUM_REGISTRO_ENCONTRADO);
-		}
-		return stateFound;
 	}
 
 	protected void validateState(StateDTO stateDTO) throws StateException {

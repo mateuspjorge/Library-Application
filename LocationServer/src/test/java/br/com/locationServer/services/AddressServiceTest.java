@@ -18,6 +18,7 @@ import br.com.locationServer.dtos.AddressDTO;
 import br.com.locationServer.entitys.Address;
 import br.com.locationServer.exception.AddressException;
 import br.com.locationServer.repositorys.IAddressRepository;
+import br.com.locationServer.services.impl.AddressServiceImpl;
 
 @SpringBootTest
 public class AddressServiceTest {
@@ -26,7 +27,7 @@ public class AddressServiceTest {
 	private IAddressRepository addressRepository;
 
 	@InjectMocks
-	private AddressService addressService;
+	private AddressServiceImpl addressService;
 
 	@SuppressWarnings("deprecation")
 	@Before
