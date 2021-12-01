@@ -1,4 +1,4 @@
-package br.com.locationServer.controllers;
+package br.com.locationServer.controllers.impl;
 
 import java.util.List;
 
@@ -15,24 +15,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.locationServer.controllers.AddressController;
 import br.com.locationServer.dtos.AddressDTO;
 import br.com.locationServer.exception.AddressException;
-import br.com.locationServer.services.impl.AddressServiceImpl;
+import br.com.locationServer.services.IAddressService;
 
 @RestController
 @RequestMapping(path = "/address")
-public class AddressControllerImpl {
+public class AddressControllerImpl implements AddressController {
 
-	private AddressServiceImpl addressService;
+	private IAddressService addressService;
 
 	@Autowired
-	public AddressControllerImpl(AddressServiceImpl addressService) {
+	public AddressControllerImpl(IAddressService addressService) {
 		super();
 		this.addressService = addressService;
 	}
 
 	@PostMapping("/register")
 	@ResponseBody
+	@Override
 	public ResponseEntity<AddressDTO> registerAddress(@RequestBody AddressDTO addressDTO) throws AddressException {
 		AddressDTO registeredAddress = AddressDTO.convertAddressToDto(addressService.registerAddress(addressDTO));
 		return new ResponseEntity<>(registeredAddress, HttpStatus.CREATED);
@@ -40,6 +42,7 @@ public class AddressControllerImpl {
 
 	@GetMapping("/search")
 	@ResponseBody
+	@Override
 	public ResponseEntity<List<AddressDTO>> searchAllAddress() throws AddressException {
 		List<AddressDTO> addressFound = AddressDTO.convertListAddressToListDto(addressService.searchAllAddress());
 		return new ResponseEntity<>(addressFound, HttpStatus.ACCEPTED);
@@ -47,6 +50,7 @@ public class AddressControllerImpl {
 
 	@GetMapping("/internal/search-by/{addressId}")
 	@ResponseBody
+	@Override
 	public ResponseEntity<AddressDTO> searchAddressById(@PathVariable("addressId") Long addressId) throws AddressException {
 		AddressDTO addressFound = AddressDTO.convertAddressToDto(addressService.searchAddressById(addressId));
 		return new ResponseEntity<>(addressFound, HttpStatus.ACCEPTED);
@@ -54,6 +58,7 @@ public class AddressControllerImpl {
 
 	@PutMapping("/update")
 	@ResponseBody
+	@Override
 	public ResponseEntity<AddressDTO> updateAddress(@RequestBody AddressDTO addressDTO) throws AddressException {
 		AddressDTO updatedAddress = AddressDTO.convertAddressToDto(addressService.updateAddress(addressDTO));
 		return new ResponseEntity<>(updatedAddress, HttpStatus.CREATED);
@@ -61,6 +66,7 @@ public class AddressControllerImpl {
 
 	@DeleteMapping("/delete")
 	@ResponseBody
+	@Override
 	public void deleteAddress(@RequestBody AddressDTO addressDTO) throws AddressException {
 		addressService.deleteAddress(addressDTO);
 	}
