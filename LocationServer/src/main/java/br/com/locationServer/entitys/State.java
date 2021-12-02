@@ -51,7 +51,6 @@ public class State implements Serializable {
 
 	@ManyToOne
 	@JoinColumn(name = "ID_COUNTRY")
-	@Column(name = "ID_COUNTRY", nullable = false)
 	private Country country;
 
 	@OneToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH })

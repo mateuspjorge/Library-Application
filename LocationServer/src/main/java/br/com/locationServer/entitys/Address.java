@@ -56,7 +56,6 @@ public class Address implements Serializable {
 
 	@ManyToOne
 	@JoinColumn(name = "ID_CITY")
-	@Column(name = "ID_CITY", nullable = false)
 	private City city;
 
 }

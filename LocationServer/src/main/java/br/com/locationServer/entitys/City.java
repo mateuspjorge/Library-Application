@@ -48,7 +48,6 @@ public class City implements Serializable {
 
 	@ManyToOne
 	@JoinColumn(name = "ID_STATE")
-	@Column(name = "ID_STATE", nullable = false)
 	private State state;
 
 	@OneToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH })
