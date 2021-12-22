@@ -1,9 +1,9 @@
 package br.com.locationServer.controllers.impl;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,35 +36,61 @@ public class CountryControllerImpl implements CountryController {
 	@ResponseBody
 	@Override
 	public ResponseEntity<CountryDTO> registerCountry(@RequestBody CountryDTO countryDTO) throws CountryException {
-		return new ResponseEntity<>(CountryDTO.convertCountryToDto(countryService.registerCountry(countryDTO)), HttpStatus.CREATED);
+		try {
+			return ResponseEntity.ok(CountryDTO.convertCountryToDto(countryService.registerCountry(countryDTO)));
+		} catch (CountryException exception) {
+			exception.printStackTrace();
+			return ResponseEntity.status(406).body(CountryDTO.createDtoWithMessageError(exception.getMessage()));
+		}
 	}
 
 	@GetMapping("/search")
 	@ResponseBody
 	@Override
 	public ResponseEntity<List<CountryDTO>> searchAllCountries() throws CountryException {
-		return new ResponseEntity<>(CountryDTO.convertListCountriesToListDto(countryService.searchAllCountries()), HttpStatus.ACCEPTED);
+		try {
+			return ResponseEntity.ok(CountryDTO.convertListCountriesToListDto(countryService.searchAllCountries()));
+		} catch (CountryException exception) {
+			exception.printStackTrace();
+			return ResponseEntity.status(204).body(Arrays.asList(CountryDTO.createDtoWithMessageError(exception.getMessage())));
+		}
 	}
 
 	@GetMapping("/internal/search-by/{countryId}")
 	@ResponseBody
 	@Override
 	public ResponseEntity<CountryDTO> searchCountryById(@PathVariable("countryId") Long countryId) throws CountryException {
-		return new ResponseEntity<>(CountryDTO.convertCountryToDto(countryService.searchCountryById(countryId)), HttpStatus.OK);
+		try {
+			return ResponseEntity.ok(CountryDTO.convertCountryToDto(countryService.searchCountryById(countryId)));
+		} catch (CountryException exception) {
+			exception.printStackTrace();
+			return ResponseEntity.status(204).body(CountryDTO.createDtoWithMessageError(exception.getMessage()));
+		}
 	}
 
 	@PutMapping("/update")
 	@ResponseBody
 	@Override
 	public ResponseEntity<CountryDTO> updateCountry(@RequestBody CountryDTO countryDTO) throws CountryException {
-		return new ResponseEntity<>(CountryDTO.convertCountryToDto(countryService.updateCountry(countryDTO)), HttpStatus.CREATED);
+		try {
+			return ResponseEntity.ok(CountryDTO.convertCountryToDto(countryService.updateCountry(countryDTO)));
+		} catch (CountryException exception) {
+			exception.printStackTrace();
+			return ResponseEntity.status(406).body(CountryDTO.createDtoWithMessageError(exception.getMessage()));
+		}
 	}
 
 	@DeleteMapping("/delete")
 	@ResponseBody
 	@Override
-	public void deleteCountry(@RequestBody CountryDTO countryDTO) throws CountryException {
-		countryService.deleteCountry(countryDTO.getName());
+	public ResponseEntity<CountryDTO> deleteCountry(@RequestBody CountryDTO countryDTO) throws CountryException {
+		try {
+			countryService.deleteCountry(countryDTO.getName());
+			return ResponseEntity.status(200).body(CountryDTO.createDtoWithMessageError(null));
+		} catch (CountryException exception) {
+			exception.printStackTrace();
+			return ResponseEntity.status(406).body(CountryDTO.createDtoWithMessageError(exception.getMessage()));
+		}
 	}
 
 }

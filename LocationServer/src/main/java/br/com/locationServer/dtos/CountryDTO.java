@@ -22,7 +22,13 @@ public class CountryDTO implements Serializable {
 
 	private String newName;
 
+	private String messageError;
+
 	private List<StateDTO> states;
+
+	public static CountryDTO createDtoWithMessageError(String error) {
+		return CountryDTO.builder().messageError(error).build();
+	}
 
 	public static CountryDTO convertCountryToDto(Country country) {
 		return CountryDTO.builder()

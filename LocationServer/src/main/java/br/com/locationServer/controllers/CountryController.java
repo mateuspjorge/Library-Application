@@ -52,6 +52,6 @@ public interface CountryController {
 	    @ApiResponse(code = 403, message = "Você não tem permissão para acessar este recurso"),
 	    @ApiResponse(code = 500, message = "Retornara uma mensagem amigável para o usuário"),
 	})
-	public void deleteCountry(@RequestBody CountryDTO countryDTO) throws CountryException;
+	public ResponseEntity<CountryDTO> deleteCountry(@RequestBody CountryDTO countryDTO) throws CountryException;
 
 }
