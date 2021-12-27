@@ -45,7 +45,7 @@ public class CountryServiceImpl implements ICountryService {
 	@Override
 	public Country searchCountryByName(String name) throws CountryException {
 		validateCountry(name);
-		Country countryFound = countryRepository.findByName(name);
+		Country countryFound = countryRepository.findByName(name.toUpperCase());
 		if (Objects.isNull(countryFound)) {
 			throw new CountryException(MSG_ERROR_NENHUM_REGISTRO_ENCONTRADO);
 		}

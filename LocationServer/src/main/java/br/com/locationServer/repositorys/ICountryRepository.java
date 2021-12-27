@@ -10,7 +10,7 @@ import br.com.locationServer.entitys.Country;
 @Repository
 public interface ICountryRepository extends JpaRepository<Country, Long> {
 
-	@Query(value = "SELECT * FROM TB_COUNTRY country WHERE UPPER(country.DSC_NAME) LIKE UPPER(%:name%)", nativeQuery = true)
+	@Query("SELECT country FROM Country country WHERE UPPER(country.name) LIKE %:name%")
 	Country findByName(@Param("name") String name);
 
 }
