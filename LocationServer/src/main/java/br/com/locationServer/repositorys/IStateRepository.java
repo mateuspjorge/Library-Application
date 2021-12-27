@@ -14,7 +14,6 @@ public interface IStateRepository extends JpaRepository<State, Long> {
 		 + "FROM State state "
 		 + "WHERE UPPER(state.name) LIKE %:name% "
 		 + "AND UPPER(state.initials) LIKE %:initials%")
-	State findByNameAndInitials(@Param("name") String name,
-								@Param("initials") String initials);
+	State findByNameAndInitials(@Param("name") String name, @Param("initials") String initials);
 
 }

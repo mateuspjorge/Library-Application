@@ -22,11 +22,17 @@ public class CityDTO implements Serializable {
 
 	private String newName;
 
+	private String messageError;
+
 	private StateDTO state;
 
 	private StateDTO newState;
 
 	private List<AddressDTO> addresses;
+
+	public static CityDTO createDtoWithMessageError(String error) {
+		return CityDTO.builder().messageError(error).build();
+	}
 
 	public static CityDTO convertCityToDto(City city) {
 		return CityDTO.builder()

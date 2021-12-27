@@ -10,9 +10,7 @@ import br.com.locationServer.entitys.City;
 @Repository
 public interface ICityRepository extends JpaRepository<City, Long> {
 
-	@Query(value = "SELECT * "
-				 + "FROM TB_CITY city "
-				 + "WHERE UPPER(city.DSC_NAME) LIKE UPPER(%:name%) ", nativeQuery = true)
+	@Query("SELECT city FROM City city WHERE UPPER(city.name) LIKE %:name% ")
 	City findByName(@Param("name") String name);
 
 }

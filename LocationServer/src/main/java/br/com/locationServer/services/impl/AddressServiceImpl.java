@@ -70,15 +70,14 @@ public class AddressServiceImpl implements IAddressService {
 
 	@Override
 	public void deleteAddress(AddressDTO addressDTO) throws AddressException {
-		Address addressFound = addressRepository.findById(addressDTO.getId()).orElse(null);
-		if (Objects.isNull(addressFound)) {
-			throw new AddressException(MSG_ERROR_NENHUM_REGISTRO_ENCONTRADO);
-		}
-		addressRepository.delete(addressFound);
+		addressRepository.delete(searchAddressById(addressDTO.getId()));
 	}
 
 	@Override
 	public Address searchAddressById(Long addressId) throws AddressException {
+		if (Objects.isNull(addressId)) {
+			throw new AddressException("O Endereço informado não possui ID");
+		}
 		Address addressFound = addressRepository.findById(addressId).orElse(null);
 		if (Objects.isNull(addressFound)) {
 			throw new AddressException(MSG_ERROR_NENHUM_REGISTRO_ENCONTRADO);

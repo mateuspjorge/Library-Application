@@ -46,7 +46,7 @@ public class CityServiceImpl implements ICityService {
 	@Override
 	public City searchCityByName(CityDTO cityDTO) throws CityException {
 		validateCity(cityDTO);
-		City cityFound = cityRepository.findByName(cityDTO.getName());
+		City cityFound = cityRepository.findByName(cityDTO.getName().toUpperCase());
 		if (Objects.isNull(cityFound)) {
 			throw new CityException(MSG_ERROR_NENHUM_REGISTRO_ENCONTRADO);
 		}

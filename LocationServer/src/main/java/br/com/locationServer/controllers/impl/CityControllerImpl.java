@@ -1,9 +1,9 @@
 package br.com.locationServer.controllers.impl;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,36 +35,62 @@ public class CityControllerImpl implements CityController {
 	@PostMapping("/register")
 	@ResponseBody
 	@Override
-	public ResponseEntity<CityDTO> registerCity(@RequestBody CityDTO cityDTO) throws CityException {
-		return new ResponseEntity<>(CityDTO.convertCityToDto(cityService.registerCity(cityDTO)), HttpStatus.CREATED);
+	public ResponseEntity<CityDTO> registerCity(@RequestBody CityDTO cityDTO) {
+		try {
+			return ResponseEntity.ok(CityDTO.convertCityToDto(cityService.registerCity(cityDTO)));
+		} catch (CityException exception) {
+			exception.printStackTrace();
+			return ResponseEntity.status(406).body(CityDTO.createDtoWithMessageError(exception.getMessage()));
+		}
 	}
 
 	@GetMapping("/search")
 	@ResponseBody
 	@Override
-	public ResponseEntity<List<CityDTO>> searchAllCities() throws CityException {
-		return new ResponseEntity<>(CityDTO.convertListCitiesToListDto(cityService.searchAllCities()), HttpStatus.ACCEPTED);
+	public ResponseEntity<List<CityDTO>> searchAllCities() {
+		try {
+			return ResponseEntity.ok(CityDTO.convertListCitiesToListDto(cityService.searchAllCities()));
+		} catch (CityException exception) {
+			exception.printStackTrace();
+			return ResponseEntity.status(204).body(Arrays.asList(CityDTO.createDtoWithMessageError(exception.getMessage())));
+		}
 	}
 
 	@GetMapping("/internal/search-by/{cityId}")
 	@ResponseBody
 	@Override
-	public ResponseEntity<CityDTO> searchCityById(@PathVariable("cityId") Long cityId) throws CityException {
-		return new ResponseEntity<>(CityDTO.convertCityToDto(cityService.searchCityById(cityId)), HttpStatus.ACCEPTED);
+	public ResponseEntity<CityDTO> searchCityById(@PathVariable("cityId") Long cityId) {
+		try {
+			return ResponseEntity.ok(CityDTO.convertCityToDto(cityService.searchCityById(cityId)));
+		} catch (CityException exception) {
+			exception.printStackTrace();
+			return ResponseEntity.status(204).body(CityDTO.createDtoWithMessageError(exception.getMessage()));
+		}
 	}
 
 	@PutMapping("/update")
 	@ResponseBody
 	@Override
-	public ResponseEntity<CityDTO> updateCity(@RequestBody CityDTO cityDTO) throws CityException {
-		return new ResponseEntity<>(CityDTO.convertCityToDto(cityService.updateCity(cityDTO)), HttpStatus.CREATED);
+	public ResponseEntity<CityDTO> updateCity(@RequestBody CityDTO cityDTO) {
+		try {
+			return ResponseEntity.ok(CityDTO.convertCityToDto(cityService.updateCity(cityDTO)));
+		} catch (CityException exception) {
+			exception.printStackTrace();
+			return ResponseEntity.status(406).body(CityDTO.createDtoWithMessageError(exception.getMessage()));
+		}
 	}
 
 	@DeleteMapping("/delete")
 	@ResponseBody
 	@Override
-	public void deleteCity(@RequestBody CityDTO cityDTO) throws CityException {
-		cityService.deleteCity(cityDTO);
+	public ResponseEntity<CityDTO> deleteCity(@RequestBody CityDTO cityDTO) {
+		try {
+			cityService.deleteCity(cityDTO);
+			return ResponseEntity.status(200).body(CityDTO.createDtoWithMessageError(null));
+		} catch (CityException exception) {
+			exception.printStackTrace();
+			return ResponseEntity.status(406).body(CityDTO.createDtoWithMessageError(exception.getMessage()));
+		}
 	}
 
 }

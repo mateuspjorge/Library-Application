@@ -1,9 +1,9 @@
 package br.com.locationServer.controllers.impl;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,40 +35,62 @@ public class AddressControllerImpl implements AddressController {
 	@PostMapping("/register")
 	@ResponseBody
 	@Override
-	public ResponseEntity<AddressDTO> registerAddress(@RequestBody AddressDTO addressDTO) throws AddressException {
-		AddressDTO registeredAddress = AddressDTO.convertAddressToDto(addressService.registerAddress(addressDTO));
-		return new ResponseEntity<>(registeredAddress, HttpStatus.CREATED);
+	public ResponseEntity<AddressDTO> registerAddress(@RequestBody AddressDTO addressDTO) {
+		try {
+			return ResponseEntity.ok(AddressDTO.convertAddressToDto(addressService.registerAddress(addressDTO)));
+		} catch (AddressException exception) {
+			exception.printStackTrace();
+			return ResponseEntity.status(406).body(AddressDTO.createDtoWithMessageError(exception.getMessage()));
+		}
 	}
 
 	@GetMapping("/search")
 	@ResponseBody
 	@Override
-	public ResponseEntity<List<AddressDTO>> searchAllAddress() throws AddressException {
-		List<AddressDTO> addressFound = AddressDTO.convertListAddressToListDto(addressService.searchAllAddress());
-		return new ResponseEntity<>(addressFound, HttpStatus.ACCEPTED);
+	public ResponseEntity<List<AddressDTO>> searchAllAddress() {
+		try {
+			return ResponseEntity.ok(AddressDTO.convertListAddressToListDto(addressService.searchAllAddress()));
+		} catch (AddressException exception) {
+			exception.printStackTrace();
+			return ResponseEntity.status(204).body(Arrays.asList(AddressDTO.createDtoWithMessageError(exception.getMessage())));
+		}
 	}
 
 	@GetMapping("/internal/search-by/{addressId}")
 	@ResponseBody
 	@Override
-	public ResponseEntity<AddressDTO> searchAddressById(@PathVariable("addressId") Long addressId) throws AddressException {
-		AddressDTO addressFound = AddressDTO.convertAddressToDto(addressService.searchAddressById(addressId));
-		return new ResponseEntity<>(addressFound, HttpStatus.ACCEPTED);
+	public ResponseEntity<AddressDTO> searchAddressById(@PathVariable("addressId") Long addressId) {
+		try {
+			return ResponseEntity.ok(AddressDTO.convertAddressToDto(addressService.searchAddressById(addressId)));
+		} catch (AddressException exception) {
+			exception.printStackTrace();
+			return ResponseEntity.status(204).body(AddressDTO.createDtoWithMessageError(exception.getMessage()));
+		}
 	}
 
 	@PutMapping("/update")
 	@ResponseBody
 	@Override
-	public ResponseEntity<AddressDTO> updateAddress(@RequestBody AddressDTO addressDTO) throws AddressException {
-		AddressDTO updatedAddress = AddressDTO.convertAddressToDto(addressService.updateAddress(addressDTO));
-		return new ResponseEntity<>(updatedAddress, HttpStatus.CREATED);
+	public ResponseEntity<AddressDTO> updateAddress(@RequestBody AddressDTO addressDTO) {
+		try {
+			return ResponseEntity.ok(AddressDTO.convertAddressToDto(addressService.updateAddress(addressDTO)));
+		} catch (AddressException exception) {
+			exception.printStackTrace();
+			return ResponseEntity.status(406).body(AddressDTO.createDtoWithMessageError(exception.getMessage()));
+		}
 	}
 
 	@DeleteMapping("/delete")
 	@ResponseBody
 	@Override
-	public void deleteAddress(@RequestBody AddressDTO addressDTO) throws AddressException {
-		addressService.deleteAddress(addressDTO);
+	public ResponseEntity<AddressDTO> deleteAddress(@RequestBody AddressDTO addressDTO) {
+		try {
+			addressService.deleteAddress(addressDTO);
+			return ResponseEntity.status(200).body(AddressDTO.createDtoWithMessageError(null));
+		} catch (AddressException exception) {
+			exception.printStackTrace();
+			return ResponseEntity.status(406).body(AddressDTO.createDtoWithMessageError(exception.getMessage()));
+		}
 	}
 
 }

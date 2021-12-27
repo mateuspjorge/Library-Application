@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import br.com.locationServer.dtos.CityDTO;
-import br.com.locationServer.exception.CityException;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -20,7 +19,7 @@ public interface CityController {
 	    @ApiResponse(code = 403, message = "Você não tem permissão para acessar este recurso"),
 	    @ApiResponse(code = 500, message = "Retornara uma mensagem amigável para o usuário"),
 	})
-	public ResponseEntity<CityDTO> registerCity(@RequestBody CityDTO cityDTO) throws CityException;
+	public ResponseEntity<CityDTO> registerCity(@RequestBody CityDTO cityDTO);
 
 	@ApiOperation(value = "Lista todos as cidades")
 	@ApiResponses(value = {
@@ -28,7 +27,7 @@ public interface CityController {
 	    @ApiResponse(code = 403, message = "Você não tem permissão para acessar este recurso"),
 	    @ApiResponse(code = 500, message = "Retornara uma mensagem amigável para o usuário"),
 	})
-	public ResponseEntity<List<CityDTO>> searchAllCities() throws CityException;
+	public ResponseEntity<List<CityDTO>> searchAllCities();
 
 	@ApiOperation(value = "Busca uma cidade por id")
 	@ApiResponses(value = {
@@ -36,7 +35,7 @@ public interface CityController {
 	    @ApiResponse(code = 403, message = "Você não tem permissão para acessar este recurso"),
 	    @ApiResponse(code = 500, message = "Retornara uma mensagem amigável para o usuário"),
 	})
-	public ResponseEntity<CityDTO> searchCityById(@PathVariable("cityId") Long cityId) throws CityException;
+	public ResponseEntity<CityDTO> searchCityById(@PathVariable("cityId") Long cityId);
 
 	@ApiOperation(value = "Atualiza uma cidade")
 	@ApiResponses(value = {
@@ -44,7 +43,7 @@ public interface CityController {
 	    @ApiResponse(code = 403, message = "Você não tem permissão para acessar este recurso"),
 	    @ApiResponse(code = 500, message = "Retornara uma mensagem amigável para o usuário"),
 	})
-	public ResponseEntity<CityDTO> updateCity(@RequestBody CityDTO cityDTO) throws CityException;
+	public ResponseEntity<CityDTO> updateCity(@RequestBody CityDTO cityDTO);
 
 	@ApiOperation(value = "Deleta uma cidade")
 	@ApiResponses(value = {
@@ -52,6 +51,6 @@ public interface CityController {
 	    @ApiResponse(code = 403, message = "Você não tem permissão para acessar este recurso"),
 	    @ApiResponse(code = 500, message = "Retornara uma mensagem amigável para o usuário"),
 	})
-	public void deleteCity(@RequestBody CityDTO cityDTO) throws CityException;
+	public ResponseEntity<CityDTO> deleteCity(@RequestBody CityDTO cityDTO);
 
 }

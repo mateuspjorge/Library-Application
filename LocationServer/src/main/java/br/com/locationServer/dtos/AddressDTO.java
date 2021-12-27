@@ -38,9 +38,15 @@ public class AddressDTO implements Serializable {
 
 	private String newComplement;
 
+	private String messageError;
+
 	private CityDTO city;
 
 	private CityDTO newCity;
+
+	public static AddressDTO createDtoWithMessageError(String error) {
+		return AddressDTO.builder().messageError(error).build();
+	}
 
 	public static AddressDTO convertAddressToDto(Address address) {
 		return AddressDTO.builder()
