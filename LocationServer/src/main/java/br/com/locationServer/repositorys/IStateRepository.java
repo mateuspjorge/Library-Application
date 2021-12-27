@@ -10,10 +10,10 @@ import br.com.locationServer.entitys.State;
 @Repository
 public interface IStateRepository extends JpaRepository<State, Long> {
 
-	@Query(value = "SELECT * "
-				 + "FROM TB_STATE state "
-				 + "WHERE UPPER(state.DSC_NAME) LIKE UPPER(%:name%) "
-				 + "AND UPPER(state.DSC_INITIALS) LIKE UPPER(%:initials%)", nativeQuery = true)
+	@Query("SELECT state "
+		 + "FROM State state "
+		 + "WHERE UPPER(state.name) LIKE %:name% "
+		 + "AND UPPER(state.initials) LIKE %:initials%")
 	State findByNameAndInitials(@Param("name") String name,
 								@Param("initials") String initials);
 

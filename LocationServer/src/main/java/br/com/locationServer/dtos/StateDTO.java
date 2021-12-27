@@ -26,11 +26,17 @@ public class StateDTO implements Serializable {
 
 	private String newInitials;
 
+	private String messageError;
+
 	private CountryDTO country;
 
 	private CountryDTO newCountry;
 
 	private List<CityDTO> cities;
+
+	public static StateDTO createDtoWithMessageError(String error) {
+		return StateDTO.builder().messageError(error).build();
+	}
 
 	public static StateDTO convertStateToDto(State state) {
 		return StateDTO.builder()

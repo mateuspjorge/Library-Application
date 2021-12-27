@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import br.com.locationServer.dtos.StateDTO;
-import br.com.locationServer.exception.StateException;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -20,7 +19,7 @@ public interface StateController {
 	    @ApiResponse(code = 403, message = "Você não tem permissão para acessar este recurso"),
 	    @ApiResponse(code = 500, message = "Retornara uma mensagem amigável para o usuário"),
 	})
-	public ResponseEntity<StateDTO> registerState(@RequestBody StateDTO stateDTO) throws StateException;
+	public ResponseEntity<StateDTO> registerState(@RequestBody StateDTO stateDTO);
 
 	@ApiOperation(value = "Lista todos os estados")
 	@ApiResponses(value = {
@@ -28,7 +27,7 @@ public interface StateController {
 	    @ApiResponse(code = 403, message = "Você não tem permissão para acessar este recurso"),
 	    @ApiResponse(code = 500, message = "Retornara uma mensagem amigável para o usuário"),
 	})
-	public ResponseEntity<List<StateDTO>> searchAllStates() throws StateException;
+	public ResponseEntity<List<StateDTO>> searchAllStates();
 
 	@ApiOperation(value = "Busca um estado por id")
 	@ApiResponses(value = {
@@ -36,7 +35,7 @@ public interface StateController {
 	    @ApiResponse(code = 403, message = "Você não tem permissão para acessar este recurso"),
 	    @ApiResponse(code = 500, message = "Retornara uma mensagem amigável para o usuário"),
 	})
-	public ResponseEntity<StateDTO> searchStateById(@PathVariable("stateId") Long stateId) throws StateException;
+	public ResponseEntity<StateDTO> searchStateById(@PathVariable("stateId") Long stateId);
 
 	@ApiOperation(value = "Atualiza um estado")
 	@ApiResponses(value = {
@@ -44,7 +43,7 @@ public interface StateController {
 	    @ApiResponse(code = 403, message = "Você não tem permissão para acessar este recurso"),
 	    @ApiResponse(code = 500, message = "Retornara uma mensagem amigável para o usuário"),
 	})
-	public ResponseEntity<StateDTO> updateState(@RequestBody StateDTO stateDTO) throws StateException;
+	public ResponseEntity<StateDTO> updateState(@RequestBody StateDTO stateDTO);
 
 	@ApiOperation(value = "Deleta um estado")
 	@ApiResponses(value = {
@@ -52,6 +51,6 @@ public interface StateController {
 	    @ApiResponse(code = 403, message = "Você não tem permissão para acessar este recurso"),
 	    @ApiResponse(code = 500, message = "Retornara uma mensagem amigável para o usuário"),
 	})
-	public void deleteState(@RequestBody StateDTO stateDTO) throws StateException;
+	public ResponseEntity<StateDTO> deleteState(@RequestBody StateDTO stateDTO);
 
 }

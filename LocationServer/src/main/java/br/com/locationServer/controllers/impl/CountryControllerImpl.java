@@ -35,7 +35,7 @@ public class CountryControllerImpl implements CountryController {
 	@PostMapping("/register")
 	@ResponseBody
 	@Override
-	public ResponseEntity<CountryDTO> registerCountry(@RequestBody CountryDTO countryDTO) throws CountryException {
+	public ResponseEntity<CountryDTO> registerCountry(@RequestBody CountryDTO countryDTO) {
 		try {
 			return ResponseEntity.ok(CountryDTO.convertCountryToDto(countryService.registerCountry(countryDTO)));
 		} catch (CountryException exception) {
@@ -47,7 +47,7 @@ public class CountryControllerImpl implements CountryController {
 	@GetMapping("/search")
 	@ResponseBody
 	@Override
-	public ResponseEntity<List<CountryDTO>> searchAllCountries() throws CountryException {
+	public ResponseEntity<List<CountryDTO>> searchAllCountries() {
 		try {
 			return ResponseEntity.ok(CountryDTO.convertListCountriesToListDto(countryService.searchAllCountries()));
 		} catch (CountryException exception) {
@@ -59,7 +59,7 @@ public class CountryControllerImpl implements CountryController {
 	@GetMapping("/internal/search-by/{countryId}")
 	@ResponseBody
 	@Override
-	public ResponseEntity<CountryDTO> searchCountryById(@PathVariable("countryId") Long countryId) throws CountryException {
+	public ResponseEntity<CountryDTO> searchCountryById(@PathVariable("countryId") Long countryId) {
 		try {
 			return ResponseEntity.ok(CountryDTO.convertCountryToDto(countryService.searchCountryById(countryId)));
 		} catch (CountryException exception) {
@@ -71,7 +71,7 @@ public class CountryControllerImpl implements CountryController {
 	@PutMapping("/update")
 	@ResponseBody
 	@Override
-	public ResponseEntity<CountryDTO> updateCountry(@RequestBody CountryDTO countryDTO) throws CountryException {
+	public ResponseEntity<CountryDTO> updateCountry(@RequestBody CountryDTO countryDTO) {
 		try {
 			return ResponseEntity.ok(CountryDTO.convertCountryToDto(countryService.updateCountry(countryDTO)));
 		} catch (CountryException exception) {
@@ -83,7 +83,7 @@ public class CountryControllerImpl implements CountryController {
 	@DeleteMapping("/delete")
 	@ResponseBody
 	@Override
-	public ResponseEntity<CountryDTO> deleteCountry(@RequestBody CountryDTO countryDTO) throws CountryException {
+	public ResponseEntity<CountryDTO> deleteCountry(@RequestBody CountryDTO countryDTO) {
 		try {
 			countryService.deleteCountry(countryDTO.getName());
 			return ResponseEntity.status(200).body(CountryDTO.createDtoWithMessageError(null));

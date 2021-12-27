@@ -46,7 +46,8 @@ public class StateServiceImpl implements IStateService {
 	@Override
 	public State searchStateByNameAndInitials(StateDTO stateDTO) throws StateException {
 		validateState(stateDTO);
-		State stateFound = stateRepository.findByNameAndInitials(stateDTO.getName(), stateDTO.getInitials());
+		State stateFound = stateRepository.findByNameAndInitials(stateDTO.getName().toUpperCase(),
+																 stateDTO.getInitials().toUpperCase());
 		if (Objects.isNull(stateFound)) {
 			throw new StateException(MSG_ERROR_NENHUM_REGISTRO_ENCONTRADO);
 		}
