@@ -1,4 +1,4 @@
-package br.com.bookServer.config;
+package br.com.userServer.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,7 +20,7 @@ public class SwaggerConfig {
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
           .select()
-          .apis(RequestHandlerSelectors.basePackage("br.com.bookServer.controllers"))
+          .apis(RequestHandlerSelectors.basePackage("br.com.userServer.controllers"))
           .paths(PathSelectors.any())
           .build()
           .useDefaultResponseMessages(false)
@@ -29,7 +29,7 @@ public class SwaggerConfig {
 
 	private ApiInfo apiInfo() {
 	    return new ApiInfoBuilder()
-	            .title("Book-Server")
+	            .title("User-Server")
 	            .description(buildDescription().toString())
 	            .version("1.0.0")
 	            .license("Apache License Version 2.0")
@@ -41,7 +41,7 @@ public class SwaggerConfig {
 	private StringBuilder buildDescription() {
 		StringBuilder text = new StringBuilder();
 		text.append("Um exemplo de aplicação Spring Boot REST API e documentada com swagger.");
-		text.append("Neste exemplo do servidor de livros estão sendo utilizados Spring e swagger");
+		text.append("Neste exemplo do servidor de usuários estão sendo utilizados Spring e swagger");
 		return text;
 	}
 

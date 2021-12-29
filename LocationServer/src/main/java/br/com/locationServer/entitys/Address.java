@@ -43,7 +43,7 @@ public class Address implements Serializable {
 	@Column(name = "ID_ADDRESS", nullable = false)
 	private Long id;
 
-	@Column(name = "NR_NUMBER", nullable = false)
+	@Column(name = "NR_ADDRESS", nullable = false)
 	private Integer number;
 
 	@Column(name = "NR_CEP", nullable = false)

@@ -1,7 +1,9 @@
 package br.com.userServer.interfaces;
 
 import java.io.Serializable;
+import java.util.List;
 
+import br.com.userServer.entitys.Contact;
 import br.com.userServer.enums.GenderEnum;
 
 public interface Person extends Serializable {
@@ -14,10 +16,6 @@ public interface Person extends Serializable {
 
 	void setAddress(Long address);
 
-	Long getContact();
-
-	void setContact(Long contact);
-
 	Integer getAge();
 
 	void setAge(Integer age);
@@ -29,5 +27,9 @@ public interface Person extends Serializable {
 	GenderEnum getGender();
 
 	void setGender(GenderEnum gender);
+
+	List<Contact> getContacts();
+
+	void setContacts(List<Contact> contacts);
 
 }

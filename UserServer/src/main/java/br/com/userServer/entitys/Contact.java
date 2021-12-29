@@ -1,5 +1,7 @@
 package br.com.userServer.entitys;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -7,14 +9,18 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
 import br.com.userServer.enums.ContactTypeEnum;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Builder
@@ -29,15 +35,27 @@ import lombok.Data;
                 @Parameter(name = "increment_size", value = "1")
         }
 )
-public class Contact {
+@NoArgsConstructor
+@AllArgsConstructor
+public class Contact implements Serializable {
+
+	private static final long serialVersionUID = -8103277099053489010L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_CONTACT")
 	@Column(name = "ID_CONTACT", nullable = false)
 	private Long id;
 
-	@Column(name = "DS_DESCRIPTION", nullable = false)
+	@Column(name = "DSC_CONTACT", nullable = false)
 	private String description;
+
+	@ManyToOne
+	@JoinColumn(name = "ID_STUDENT")
+	private Student student;
+
+	@ManyToOne
+	@JoinColumn(name = "ID_TEACHER")
+	private Teacher teacher;
 
 	@Column(name = "TP_CONTACT", nullable = false)
 	@Enumerated(EnumType.STRING)
