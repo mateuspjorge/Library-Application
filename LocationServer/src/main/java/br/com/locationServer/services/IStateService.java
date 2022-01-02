@@ -4,7 +4,7 @@ import java.util.List;
 
 import br.com.locationServer.dtos.StateDTO;
 import br.com.locationServer.entitys.State;
-import br.com.locationServer.exception.StateException;
+import br.com.locationServer.exceptions.StateException;
 
 public interface IStateService {
 

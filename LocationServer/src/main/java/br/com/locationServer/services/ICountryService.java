@@ -4,7 +4,7 @@ import java.util.List;
 
 import br.com.locationServer.dtos.CountryDTO;
 import br.com.locationServer.entitys.Country;
-import br.com.locationServer.exception.CountryException;
+import br.com.locationServer.exceptions.CountryException;
 
 public interface ICountryService {
 

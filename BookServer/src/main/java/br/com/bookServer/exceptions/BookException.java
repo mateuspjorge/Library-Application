@@ -1,4 +1,4 @@
-package br.com.bookServer.exception;
+package br.com.bookServer.exceptions;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -9,7 +9,7 @@ public class BookException extends Exception {
 
 	private static final long serialVersionUID = 1409450145106283276L;
 
-	private String message;
+	private final String message;
 
 	public BookException(String message) {
 		super(message);

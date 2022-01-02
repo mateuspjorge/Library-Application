@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.locationServer.controllers.AddressController;
 import br.com.locationServer.dtos.AddressDTO;
-import br.com.locationServer.exception.AddressException;
+import br.com.locationServer.exceptions.AddressException;
 import br.com.locationServer.services.IAddressService;
 
 @RestController

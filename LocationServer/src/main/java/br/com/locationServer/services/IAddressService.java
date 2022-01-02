@@ -4,7 +4,7 @@ import java.util.List;
 
 import br.com.locationServer.dtos.AddressDTO;
 import br.com.locationServer.entitys.Address;
-import br.com.locationServer.exception.AddressException;
+import br.com.locationServer.exceptions.AddressException;
 
 public interface IAddressService {
 

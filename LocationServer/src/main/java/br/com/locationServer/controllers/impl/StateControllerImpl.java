@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.locationServer.controllers.StateController;
 import br.com.locationServer.dtos.StateDTO;
-import br.com.locationServer.exception.StateException;
+import br.com.locationServer.exceptions.StateException;
 import br.com.locationServer.services.IStateService;
 
 @RestController

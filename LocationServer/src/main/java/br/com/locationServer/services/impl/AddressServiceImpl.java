@@ -11,7 +11,7 @@ import org.springframework.util.CollectionUtils;
 import br.com.locationServer.dtos.AddressDTO;
 import br.com.locationServer.dtos.CityDTO;
 import br.com.locationServer.entitys.Address;
-import br.com.locationServer.exception.AddressException;
+import br.com.locationServer.exceptions.AddressException;
 import br.com.locationServer.repositorys.IAddressRepository;
 import br.com.locationServer.services.IAddressService;
 

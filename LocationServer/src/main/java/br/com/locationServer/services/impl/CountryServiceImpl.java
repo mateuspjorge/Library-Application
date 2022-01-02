@@ -10,7 +10,7 @@ import org.springframework.util.CollectionUtils;
 
 import br.com.locationServer.dtos.CountryDTO;
 import br.com.locationServer.entitys.Country;
-import br.com.locationServer.exception.CountryException;
+import br.com.locationServer.exceptions.CountryException;
 import br.com.locationServer.repositorys.ICountryRepository;
 import br.com.locationServer.services.ICountryService;
 

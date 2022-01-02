@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.bookServer.controllers.BookController;
 import br.com.bookServer.dtos.BookDTO;
-import br.com.bookServer.exception.BookException;
+import br.com.bookServer.exceptions.BookException;
 import br.com.bookServer.services.IBookService;
 
 @RestController

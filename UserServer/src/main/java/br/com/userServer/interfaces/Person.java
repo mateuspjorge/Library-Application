@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import br.com.userServer.entitys.Contact;
+import br.com.userServer.entitys.User;
 import br.com.userServer.enums.GenderEnum;
 
 public interface Person extends Serializable {
@@ -27,6 +28,10 @@ public interface Person extends Serializable {
 	GenderEnum getGender();
 
 	void setGender(GenderEnum gender);
+
+	User getUser();
+
+	void setUser(User user);
 
 	List<Contact> getContacts();
 

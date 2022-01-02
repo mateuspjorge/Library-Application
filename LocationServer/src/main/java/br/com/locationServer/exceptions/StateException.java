@@ -1,4 +1,4 @@
-package br.com.locationServer.exception;
+package br.com.locationServer.exceptions;
 
 import lombok.Getter;
 import lombok.Setter;

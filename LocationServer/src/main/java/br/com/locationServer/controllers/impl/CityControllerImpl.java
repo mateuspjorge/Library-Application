@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.locationServer.controllers.CityController;
 import br.com.locationServer.dtos.CityDTO;
-import br.com.locationServer.exception.CityException;
+import br.com.locationServer.exceptions.CityException;
 import br.com.locationServer.services.ICityService;
 
 @RestController

@@ -10,7 +10,7 @@ import org.springframework.util.CollectionUtils;
 
 import br.com.bookServer.dtos.BookDTO;
 import br.com.bookServer.entitys.Book;
-import br.com.bookServer.exception.BookException;
+import br.com.bookServer.exceptions.BookException;
 import br.com.bookServer.repositorys.IBookRepository;
 import br.com.bookServer.services.IBookService;
 

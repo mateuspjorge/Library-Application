@@ -11,7 +11,7 @@ import org.springframework.util.CollectionUtils;
 import br.com.locationServer.dtos.CountryDTO;
 import br.com.locationServer.dtos.StateDTO;
 import br.com.locationServer.entitys.State;
-import br.com.locationServer.exception.StateException;
+import br.com.locationServer.exceptions.StateException;
 import br.com.locationServer.repositorys.IStateRepository;
 import br.com.locationServer.services.IStateService;
 

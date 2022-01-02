@@ -4,7 +4,7 @@ import java.util.List;
 
 import br.com.bookServer.dtos.BookDTO;
 import br.com.bookServer.entitys.Book;
-import br.com.bookServer.exception.BookException;
+import br.com.bookServer.exceptions.BookException;
 
 public interface IBookService {
 

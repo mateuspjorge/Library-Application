@@ -4,7 +4,7 @@ import java.util.List;
 
 import br.com.locationServer.dtos.CityDTO;
 import br.com.locationServer.entitys.City;
-import br.com.locationServer.exception.CityException;
+import br.com.locationServer.exceptions.CityException;
 
 public interface ICityService {
 

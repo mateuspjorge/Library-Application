@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.locationServer.controllers.CountryController;
 import br.com.locationServer.dtos.CountryDTO;
-import br.com.locationServer.exception.CountryException;
+import br.com.locationServer.exceptions.CountryException;
 import br.com.locationServer.services.ICountryService;
 
 @RestController

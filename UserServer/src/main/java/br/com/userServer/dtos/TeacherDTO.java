@@ -85,7 +85,7 @@ public class TeacherDTO implements Serializable {
 		return teachersDto;
 	}
 
-	public static List<Teacher> convertListDtoToListContact(List<TeacherDTO> teachersDto) {
+	public static List<Teacher> convertListDtoToListTeacher(List<TeacherDTO> teachersDto) {
 		List<Teacher> teachers = new ArrayList<>();
 		if (!CollectionUtils.isEmpty(teachersDto)) {
 			teachersDto.forEach(dto -> teachers.add(convertDtoToTeacher(dto)));

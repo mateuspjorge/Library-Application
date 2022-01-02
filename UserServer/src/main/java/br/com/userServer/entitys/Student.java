@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -52,7 +53,7 @@ public class Student implements Person {
 	@Column(name = "ID_ADDRESS", nullable = false)
 	private Long address;
 
-	@Column(name = "NR_REGISTRATION", nullable = false)
+	@Column(name = "NR_REGISTRATION", nullable = false, unique = true)
 	private Long registration;
 
 	@Column(name = "NR_AGE", nullable = false)
@@ -64,9 +65,13 @@ public class Student implements Person {
 	@Column(name = "DSC_COURSE", nullable = false)
 	private String course;
 
-	@Column(name = "DS_GENDER", nullable = false)
+	@Column(name = "DSC_GENDER", nullable = false)
 	@Enumerated(EnumType.STRING)
 	private GenderEnum gender;
+
+	@OneToOne
+	@JoinColumn(name = "ID_USER")
+	private User user;
 
 	@OneToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH })
 	@JoinTable(
