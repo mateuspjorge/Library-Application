@@ -53,11 +53,11 @@ public class Student implements Person {
 	@Column(name = "ID_ADDRESS", nullable = false)
 	private Long address;
 
-	@Column(name = "NR_REGISTRATION", nullable = false, unique = true)
-	private Long registration;
-
 	@Column(name = "NR_AGE", nullable = false)
 	private Integer age;
+
+	@Column(name = "NR_REGISTRATION", nullable = false, unique = true)
+	private String registration;
 
 	@Column(name = "DSC_NAME", nullable = false)
 	private String name;

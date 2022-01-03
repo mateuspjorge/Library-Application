@@ -23,10 +23,6 @@ public class StudentDTO implements Serializable {
 
 	private Long newAddress;
 
-	private Long registration;
-
-	private Long newRegistration;
-
 	private Integer age;
 
 	private Integer newAge;
@@ -38,6 +34,8 @@ public class StudentDTO implements Serializable {
 	private String course;
 
 	private String newCourse;
+
+	private String registration;
 
 	private String messageError;
 
@@ -55,10 +53,10 @@ public class StudentDTO implements Serializable {
 		return StudentDTO.builder()
 					     .id(student.getId())
 					     .address(student.getAddress())
-					     .registration(student.getRegistration())
 					     .age(student.getAge())
 					     .name(student.getName())
 					     .course(student.getCourse())
+					     .registration(student.getRegistration())
 					     .gender(student.getGender())
 					     .contacts(ContactDTO.convertListContactToListDto(student.getContacts()))
 					     .build();
@@ -68,10 +66,10 @@ public class StudentDTO implements Serializable {
 		return Student.builder()
 				      .id(studentDto.getId())
 				      .address(studentDto.getAddress())
-				      .registration(studentDto.getRegistration())
 				      .age(studentDto.getAge())
 				      .name(studentDto.getName())
 				      .course(studentDto.getCourse())
+				      .registration(studentDto.getRegistration())
 				      .gender(studentDto.getGender())
 				      .contacts(ContactDTO.convertListDtoToListContact(studentDto.getContacts()))
 				      .build();
