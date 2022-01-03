@@ -12,12 +12,12 @@ public interface IUserService {
 
 	public List<User> searchAllUsers() throws UserException;
 
-	public User searchUserByUsername(String username) throws UserException;
+	public User searchUserByEmail(String email) throws UserException;
 
 	public User searchUserById(Long userId) throws UserException;
 
 	public User updateUser(UserDTO userDto) throws UserException;
 
-	public void deleteUser(String registration) throws UserException;
+	public void deleteUser(String email) throws UserException;
 
 }

@@ -1,4 +1,4 @@
-package br.com.bookServer.controllers;
+package br.com.userServer.controllers;
 
 import java.util.List;
 
@@ -6,51 +6,51 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import br.com.bookServer.dtos.BookDTO;
+import br.com.userServer.dtos.TeacherDTO;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
-public interface BookController {
+public interface TeacherController {
 
-	@ApiOperation(value = "Registra um livro")
+	@ApiOperation(value = "Registra um professor")
 	@ApiResponses(value = {
-	    @ApiResponse(code = 200, message = "Retorna um dto de livro"),
+	    @ApiResponse(code = 200, message = "Retorna um dto de professor"),
 	    @ApiResponse(code = 403, message = "Você não tem permissão para acessar este recurso"),
 	    @ApiResponse(code = 500, message = "Retornara uma mensagem amigável para o usuário"),
 	})
-	public ResponseEntity<BookDTO> registerBook(@RequestBody BookDTO bookDto);
+	public ResponseEntity<TeacherDTO> registerTeacher(@RequestBody TeacherDTO teacherDto);
 
-	@ApiOperation(value = "Lista todos os livros")
+	@ApiOperation(value = "Lista todos os professores")
 	@ApiResponses(value = {
-	    @ApiResponse(code = 200, message = "Retorna uma lista de dto de livro"),
+	    @ApiResponse(code = 200, message = "Retorna uma lista de dto de professor"),
 	    @ApiResponse(code = 403, message = "Você não tem permissão para acessar este recurso"),
 	    @ApiResponse(code = 500, message = "Retornara uma mensagem amigável para o usuário"),
 	})
-	public ResponseEntity<List<BookDTO>> searchAllBooks();
+	public ResponseEntity<List<TeacherDTO>> searchAllTeachers();
 
-	@ApiOperation(value = "Busca um livro por id")
+	@ApiOperation(value = "Busca um professor por id")
 	@ApiResponses(value = {
-	    @ApiResponse(code = 200, message = "Retorna um dto de livro"),
+	    @ApiResponse(code = 200, message = "Retorna um dto de professor"),
 	    @ApiResponse(code = 403, message = "Você não tem permissão para acessar este recurso"),
 	    @ApiResponse(code = 500, message = "Retornara uma mensagem amigável para o usuário"),
 	})
-	public ResponseEntity<BookDTO> searchBookById(@PathVariable("bookId") Long bookId);
+	public ResponseEntity<TeacherDTO> searchTeacherById(@PathVariable("teacherId") Long teacherId);
 
-	@ApiOperation(value = "Atualiza um livro")
+	@ApiOperation(value = "Atualiza um professor")
 	@ApiResponses(value = {
-	    @ApiResponse(code = 200, message = "Retorna um dto de livro"),
+	    @ApiResponse(code = 200, message = "Retorna um dto de professor"),
 	    @ApiResponse(code = 403, message = "Você não tem permissão para acessar este recurso"),
 	    @ApiResponse(code = 500, message = "Retornara uma mensagem amigável para o usuário"),
 	})
-	public ResponseEntity<BookDTO> updateBook(@RequestBody BookDTO bookDto);
+	public ResponseEntity<TeacherDTO> updateTeacher(@RequestBody TeacherDTO teacherDto);
 
-	@ApiOperation(value = "Deleta um livro")
+	@ApiOperation(value = "Deleta um professor")
 	@ApiResponses(value = {
 	    @ApiResponse(code = 200, message = "Não possui retorno"),
 	    @ApiResponse(code = 403, message = "Você não tem permissão para acessar este recurso"),
 	    @ApiResponse(code = 500, message = "Retornara uma mensagem amigável para o usuário"),
 	})
-	public ResponseEntity<BookDTO> deleteBook(@RequestBody BookDTO bookDto);
+	public ResponseEntity<TeacherDTO> deleteTeacher(@RequestBody TeacherDTO teacherDto);
 
 }

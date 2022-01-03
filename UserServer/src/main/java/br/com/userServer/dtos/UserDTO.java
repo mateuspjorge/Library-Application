@@ -22,11 +22,21 @@ public class UserDTO implements Serializable {
 
 	private String username;
 
+	private String newUsername;
+
 	private String password;
+
+	private String newPassword;
 
 	private String email;
 
+	private String newEmail;
+
 	private String messageError;
+
+	private StudentDTO student;
+
+	private TeacherDTO teacher;
 
 	public static UserDTO createDtoWithMessageError(String error) {
 		return UserDTO.builder().messageError(error).build();
@@ -39,6 +49,8 @@ public class UserDTO implements Serializable {
 					  .username(user.getUsername())
 					  .password(user.getPassword())
 					  .email(user.getEmail())
+					  .student(StudentDTO.convertStudentToDto(user.getStudent()))
+					  .teacher(TeacherDTO.convertTeacherToDto(user.getTeacher()))
 					  .build();
 	}
 
@@ -49,6 +61,8 @@ public class UserDTO implements Serializable {
 				   .username(userDto.getUsername())
 				   .password(userDto.getPassword())
 				   .email(userDto.getEmail())
+				   .student(StudentDTO.convertDtoToStudent(userDto.getStudent()))
+				   .teacher(TeacherDTO.convertDtoToTeacher(userDto.getTeacher()))
 				   .build();
 	}
 

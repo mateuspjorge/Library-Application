@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -41,7 +42,7 @@ public class User implements Serializable {
 	@Column(name = "ID_USER", nullable = false)
 	private Long id;
 
-	@Column(name = "ID_GOOGLE")
+	@Column(name = "ID_GOOGLE", nullable = true)
 	private String uId;
 
 	@Column(name = "DSC_LOGIN", nullable = false, unique = true)
@@ -52,5 +53,13 @@ public class User implements Serializable {
 
 	@Column(name = "DSC_EMAIL", nullable = false, unique = true)
 	private String email;
+
+	@OneToOne(mappedBy = "user")
+	@Column(name = "ID_STUDENT", nullable = true)
+	private Student student;
+
+	@OneToOne(mappedBy = "user")
+	@Column(name = "ID_TEACHER", nullable = true)
+	private Teacher teacher;
 
 }
