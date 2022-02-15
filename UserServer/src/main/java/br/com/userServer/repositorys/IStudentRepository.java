@@ -10,7 +10,7 @@ import br.com.userServer.entitys.Student;
 @Repository
 public interface IStudentRepository extends JpaRepository<Student, Long> {
 
-	@Query("SELECT student FROM Student student WHERE student.registration = %:registration% ")
+	@Query("SELECT student FROM Student student WHERE student.registration = :registration ")
 	Student findByRegistration(@Param("registration") String registration);
 
 }

@@ -26,6 +26,7 @@ public interface UserController {
 	    @ApiResponse(code = 200, message = "Retorna uma lista de dto de usuário"),
 	    @ApiResponse(code = 403, message = "Você não tem permissão para acessar este recurso"),
 	    @ApiResponse(code = 500, message = "Retornara uma mensagem amigável para o usuário"),
+	    @ApiResponse(code = 503, message = "Retorna uma mensagem informando que o serviço não está disponivel"),
 	})
 	public ResponseEntity<List<UserDTO>> searchAllUsers();
 

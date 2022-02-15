@@ -55,11 +55,9 @@ public class User implements Serializable {
 	private String email;
 
 	@OneToOne(mappedBy = "user")
-	@Column(name = "ID_STUDENT", nullable = true)
 	private Student student;
 
 	@OneToOne(mappedBy = "user")
-	@Column(name = "ID_TEACHER", nullable = true)
 	private Teacher teacher;
 
 }
