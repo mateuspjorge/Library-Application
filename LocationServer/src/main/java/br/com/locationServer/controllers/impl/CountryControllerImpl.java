@@ -2,6 +2,7 @@ package br.com.locationServer.controllers.impl;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.async.AsyncRequestTimeoutException;
 
 import br.com.locationServer.controllers.CountryController;
 import br.com.locationServer.dtos.CountryDTO;
@@ -47,13 +49,18 @@ public class CountryControllerImpl implements CountryController {
 	@GetMapping("/search")
 	@ResponseBody
 	@Override
-	public ResponseEntity<List<CountryDTO>> searchAllCountries() {
-		try {
-			return ResponseEntity.ok(CountryDTO.convertListCountriesToListDto(countryService.searchAllCountries()));
-		} catch (CountryException exception) {
-			exception.printStackTrace();
-			return ResponseEntity.status(204).body(Arrays.asList(CountryDTO.createDtoWithMessageError(exception.getMessage())));
-		}
+	public Callable<ResponseEntity<List<CountryDTO>>> searchAllCountries() {
+		return () -> {
+			try {
+				return ResponseEntity.ok(CountryDTO.convertListCountriesToListDto(countryService.searchAllCountries()));
+			} catch (CountryException exception) {
+				exception.printStackTrace();
+				return ResponseEntity.status(204).body(Arrays.asList(CountryDTO.createDtoWithMessageError(exception.getMessage())));
+			}  catch (AsyncRequestTimeoutException exception) {
+				exception.printStackTrace();
+				return ResponseEntity.status(204).body(Arrays.asList(CountryDTO.createDtoWithMessageError("tESTED")));
+			}
+		};
 	}
 
 	@GetMapping("/internal/search-by/{countryId}")

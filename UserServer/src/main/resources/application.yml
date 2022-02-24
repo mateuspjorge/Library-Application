@@ -19,6 +19,9 @@ spring:
     properties:
       hibernate:
         format_sql: true
+  mvc:
+    async:
+      request-timeout: 30000
 
 eureka:
   instance:

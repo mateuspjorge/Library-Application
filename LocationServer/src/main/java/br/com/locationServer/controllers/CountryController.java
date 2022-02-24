@@ -1,6 +1,7 @@
 package br.com.locationServer.controllers;
 
 import java.util.List;
+import java.util.concurrent.Callable;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,7 +28,7 @@ public interface CountryController {
 	    @ApiResponse(code = 403, message = "Você não tem permissão para acessar este recurso"),
 	    @ApiResponse(code = 500, message = "Retornara uma mensagem amigável para o usuário"),
 	})
-	public ResponseEntity<List<CountryDTO>> searchAllCountries();
+	public Callable<ResponseEntity<List<CountryDTO>>> searchAllCountries();
 
 	@ApiOperation(value = "Busca um país por id")
 	@ApiResponses(value = {
