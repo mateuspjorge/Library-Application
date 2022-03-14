@@ -30,3 +30,6 @@ eureka:
     fetchRegistry: true
     serviceUrl:
       defaultZone: 'http://${eureka.instance.hostname}:${eureka.instance.port}/eureka/'
+
+javers:
+  newObjectSnapshot: true
